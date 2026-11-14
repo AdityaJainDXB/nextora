@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm install",
+  "buildCommand": "node scripts/buildWeb.mjs",
+  "outputDirectory": "dist-web",
+  "rewrites": [
+    {
+      "source": "/((?!_expo/|assets/|favicon).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

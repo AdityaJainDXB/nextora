@@ -88,7 +88,8 @@
     "seed:remove": "tsx scripts/seedSample.ts --remove",
     "i18n:check": "node scripts/i18nCheck.mjs",
     "demo": "node scripts/demo.mjs",
-    "deploy:web": "node scripts/deployWeb.mjs"
+    "deploy:web": "node scripts/deployWeb.mjs",
+    "build:web": "node scripts/buildWeb.mjs"
   },
   "private": true
 }
