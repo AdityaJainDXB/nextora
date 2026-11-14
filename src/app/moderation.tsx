@@ -77,9 +77,9 @@ export default function Moderation() {
             return (
               <Card key={r.id}>
                 <Row wrap gap={space.xs}>
-                  <Tag label={t(`report.${r.reason}`)} tone={r.reason === 'childSafety' ? 'danger' : 'purple'} />
+                  <Tag label={t(`report.${r.reason}`)} tone={r.reason === 'childSafety' ? 'danger' : 'ink'} />
                   <Tag label={t(`mod.type${cap(r.targetType)}`)} />
-                  <Tag label={t(`mod.status${cap(r.status)}`)} tone="teal" />
+                  <Tag label={t(`mod.status${cap(r.status)}`)} tone="clay" />
                   {overdue(r) && tab === 'queue' ? <Tag label={t('mod.overdue')} tone="danger" /> : null}
                 </Row>
                 {r.note ? <T v="small">{r.note}</T> : null}

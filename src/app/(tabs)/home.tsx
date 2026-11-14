@@ -62,7 +62,7 @@ export default function Home() {
                     <T w="semibold" style={[{ flex: 1 }, on && { textDecorationLine: 'line-through', color: colors.textMuted }]}>{t(`check.${it.id}`)}</T>
                   </Row>
                   <T v="small" color={colors.textMuted}>{t(`check.${it.id}Desc`)}</T>
-                  {it.official ? <Tag label={`${t('appv.officialName')}: ${it.official}`} tone="purple" /> : null}
+                  {it.official ? <Tag label={`${t('appv.officialName')}: ${it.official}`} tone="ink" /> : null}
                   <ChecklistActions id={it.id} />
                   {app ? (
                     <Pressable onPress={() => router.push(`/app/${app.id}`)} accessibilityRole="link" accessibilityLabel={t('a11y.openApp', { name: app.name })} style={styles.link}>
@@ -94,7 +94,7 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  header: { backgroundColor: colors.aubergine, borderRadius: radius.lg, padding: space.lg, gap: space.xs },
+  header: { backgroundColor: colors.ink, borderRadius: radius.lg, padding: space.lg, gap: space.xs },
   check: {
     width: touch, height: touch, borderRadius: touch / 2, borderWidth: 2, borderColor: colors.border,
     alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surface,

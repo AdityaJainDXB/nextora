@@ -9,7 +9,7 @@ import { styles } from './ui';
 export function Screen({
   children, scroll = true, padded = true, dark = false, footer,
 }: { children: React.ReactNode; scroll?: boolean; padded?: boolean; dark?: boolean; footer?: React.ReactNode }) {
-  const bg = dark ? colors.aubergine : colors.bg;
+  const bg = dark ? colors.ink : colors.bg;
   const body = scroll ? (
     <ScrollView
       contentContainerStyle={[padded && styles.pad, { paddingBottom: space.xxl }]}

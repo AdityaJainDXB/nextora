@@ -17,7 +17,7 @@ export function HeroIllustration() {
       <Animated.View
         style={{
           position: 'absolute', alignSelf: 'center', top: 10, width: 120, height: 120, borderRadius: 60,
-          backgroundColor: colors.teal, opacity: 0.9,
+          backgroundColor: colors.clay, opacity: 0.9,
           transform: [{ translateY: rise.interpolate({ inputRange: [0, 1], outputRange: [40, 0] }) }],
         }}
       />
@@ -33,7 +33,7 @@ export function HeroIllustration() {
         ))}
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10, marginTop: -14 }}>
-        {[colors.offWhite, colors.teal, '#8FA0C2', colors.offWhite].map((c, i) => (
+        {[colors.paper, colors.clay, '#8FA0C2', colors.paper].map((c, i) => (
           <View key={i} style={{ alignItems: 'center' }}>
             <View style={{ width: 16, height: 16, borderRadius: 8, backgroundColor: c }} />
             <View style={{ width: 26, height: 16, borderTopLeftRadius: 13, borderTopRightRadius: 13, backgroundColor: c, marginTop: 2 }} />

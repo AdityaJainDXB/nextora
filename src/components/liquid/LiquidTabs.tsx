@@ -34,7 +34,7 @@ export function LiquidTabs({ items, value, onChange, tone = 'light', compact, ar
       <Animated.View pointerEvents="none" style={[styles.drop, { left: x, width: w }, dark && { backgroundColor: 'rgba(255,255,255,0.18)' }]} />
       {items.map((it) => {
         const on = it.key === value;
-        const fg = dark ? (on ? colors.textOnDark : colors.textOnDarkMuted) : on ? colors.navy : colors.textMuted;
+        const fg = dark ? (on ? colors.textOnDark : colors.textOnDarkMuted) : on ? colors.night : colors.textMuted;
         return (
           <Pressable
             key={it.key}
@@ -59,7 +59,7 @@ export function LiquidTabs({ items, value, onChange, tone = 'light', compact, ar
 const styles = StyleSheet.create({
   pill: { flexDirection: 'row', padding: 6, borderRadius: radius.pill, gap: 2, alignSelf: 'stretch' },
   pillLight: { backgroundColor: 'rgba(255,255,255,0.9)', borderWidth: 1, borderColor: colors.border },
-  pillDark: { backgroundColor: 'rgba(15,27,61,0.35)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.25)' },
+  pillDark: { backgroundColor: colors.glassOnDark, borderWidth: 1, borderColor: 'rgba(255,255,255,0.25)' },
   drop: {
     position: 'absolute', top: 6, bottom: 6, borderRadius: radius.pill, backgroundColor: colors.surfaceAlt,
     borderWidth: 1, borderColor: colors.border,

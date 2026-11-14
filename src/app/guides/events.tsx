@@ -94,7 +94,7 @@ export default function Events() {
             <T w="semibold" lang="en">{e.title}</T>
             <Row wrap gap={space.xs}>
               {e.isSample ? <Tag label={t('events.sample')} tone="warning" /> : null}
-              <Tag label={t(`events.emirate_${e.emirate}`)} tone="purple" />
+              <Tag label={t(`events.emirate_${e.emirate}`)} tone="ink" />
             </Row>
             <T v="small" color={colors.textMuted}>{fmt(e.startsAt)}</T>
             <T v="small" lang="en" color={colors.textMuted}>{e.place}</T>

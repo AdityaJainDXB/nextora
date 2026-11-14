@@ -49,7 +49,7 @@ export default function EventDetail() {
     <Screen>
       <IconButton icon={isRTL ? 'arrow-forward' : 'arrow-back'} label={t('common.back')} onPress={back} />
       <Row wrap gap={space.xs}>
-        <Tag label={t(`emirates.${e.emirate}`)} tone="purple" />
+        <Tag label={t(`emirates.${e.emirate}`)} tone="ink" />
         {e.status === 'cancelled' ? <Tag label={t('events.cancelled')} tone="danger" /> : null}
         {e.hidden ? <Tag label={t('events.hiddenByMod')} tone="warning" /> : null}
         {e.isSample ? <Tag label={t('forum.sampleBadge')} tone="warning" /> : null}

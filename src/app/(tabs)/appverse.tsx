@@ -85,11 +85,11 @@ export default function Appverse() {
                   <TextBadge text={a.badge} />
                   <View style={{ flex: 1, gap: 4 }}>
                     <T w="semibold" lang="en">{a.name}</T>
-                    <Tag label={t(`appv.cat_${a.category}`)} tone="purple" />
+                    <Tag label={t(`appv.cat_${a.category}`)} tone="ink" />
                     <T v="small" color={colors.textMuted} lang="en">{a.why}</T>
                     <Row wrap gap={space.xs}>
                       <ReviewTag a={a} />
-                      {doneSteps > 0 ? <Tag label={t('appv.setupProgress', { done: doneSteps, total: a.setup.length })} tone="teal" /> : null}
+                      {doneSteps > 0 ? <Tag label={t('appv.setupProgress', { done: doneSteps, total: a.setup.length })} tone="clay" /> : null}
                     </Row>
                   </View>
                 </Row>

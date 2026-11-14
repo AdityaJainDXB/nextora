@@ -19,7 +19,7 @@ import { useStore } from '../../store/AppStore';
 import { ALL_EMIRATES, ALL_INTERESTS, type Decision, type Emirate, type Interest, type PublicProfile } from '../../store/types';
 
 type Person = PublicProfile & { uid: string };
-const labelTone = { strong: 'teal', possible: 'purple', weak: 'muted' } as const;
+const labelTone = { strong: 'clay', possible: 'ink', weak: 'muted' } as const;
 
 export default function Matches() {
   const { t } = useTranslation();

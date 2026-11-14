@@ -78,8 +78,8 @@ export default function PostScreen() {
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <ScrollView contentContainerStyle={{ padding: space.md, gap: space.md }} keyboardShouldPersistTaps="handled">
             <Row wrap gap={space.xs}>
-              <Tag label={t(`topic.${p.topic}`)} tone="purple" />
-              <Tag label={t(`emirates.${p.emirate}`)} tone="teal" />
+              <Tag label={t(`topic.${p.topic}`)} tone="ink" />
+              <Tag label={t(`emirates.${p.emirate}`)} tone="clay" />
               {p.isSample ? <Tag label={t('forum.sampleBadge')} tone="warning" /> : null}
               {p.hidden ? <Tag label={t('forum.hiddenBadge')} tone="danger" /> : null}
             </Row>

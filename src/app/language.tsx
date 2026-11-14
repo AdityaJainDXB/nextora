@@ -62,7 +62,7 @@ export default function LanguageScreen() {
                 <T v="h2" w="semibold" lang={l.code} color={soon ? colors.textMuted : colors.text}>{l.nativeName}</T>
                 <T v="tiny" lang="en" color={colors.textMuted}>{l.englishName}</T>
               </View>
-              {l.code === suggested && !soon ? <Tag label={tp('lang.suggested')} tone="teal" /> : null}
+              {l.code === suggested && !soon ? <Tag label={tp('lang.suggested')} tone="clay" /> : null}
               {reasonLabel ? <Tag label={reasonLabel} tone={testOnly ? 'warning' : 'muted'} /> : null}
               {!soon ? (
                 <Ionicons name={on ? 'radio-button-on' : 'radio-button-off'} size={22} color={on ? colors.primary : colors.border} />

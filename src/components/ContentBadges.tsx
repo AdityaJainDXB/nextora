@@ -14,8 +14,8 @@ export function ContentBadges({ a }: { a: Reviewed }) {
   const r = reviewState(a);
   return (
     <Row wrap gap={space.xs}>
-      {r === 'reviewed' ? <Tag label={t('guides.reviewedOn', { date: a.reviewedOn })} tone="teal" /> : null}
-      {r === 'needsRecheck' ? <Tag label={t('guides.reviewedOn', { date: a.reviewedOn })} tone="teal" /> : null}
+      {r === 'reviewed' ? <Tag label={t('guides.reviewedOn', { date: a.reviewedOn })} tone="clay" /> : null}
+      {r === 'needsRecheck' ? <Tag label={t('guides.reviewedOn', { date: a.reviewedOn })} tone="clay" /> : null}
       {r === 'needsRecheck' ? <Tag label={t('guides.outOfDate')} tone="warning" /> : null}
       {r === 'notReviewed' ? <Tag label={t('guides.notReviewed')} /> : null}
     </Row>

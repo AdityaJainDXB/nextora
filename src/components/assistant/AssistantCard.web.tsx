@@ -57,12 +57,12 @@ export function AssistantCard(p: AssistantCardProps) {
         stream={(p.stream as MediaStream | null) ?? null}
         level={0.06}
         processing={p.phase === 'thinking'}
-        colors={[palette.teal, '#D9A58A', palette.teal, '#D9A58A']}
+        colors={[palette.clay, '#D9A58A', palette.clay, '#D9A58A']}
       >
         <div className="va-inner">
           <div className="va-content">
             <header className="va-top">
-              <span className="t-av" style={{ ['--av-bg' as string]: colors.primarySoft, ['--av-fg' as string]: palette.aubergine, ['--av-size' as string]: '32px' }} role="img" aria-label={p.name}>NX</span>
+              <span className="t-av" style={{ ['--av-bg' as string]: colors.primarySoft, ['--av-fg' as string]: palette.ink, ['--av-size' as string]: '32px' }} role="img" aria-label={p.name}>NX</span>
               <div className="va-top-text">
                 <span className="va-name">{p.name}</span>
                 <span className="va-meta">{p.meta}</span>

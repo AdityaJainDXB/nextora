@@ -46,12 +46,12 @@ export default function Chats() {
           return (
             <Card key={c.id} onPress={incoming ? undefined : () => router.push(`/chat/${c.id}`)} a11y={t('a11y.openChat', { name })}>
               <Row gap={space.md}>
-                <Avatar initials={name.slice(0, 1).toUpperCase()} hue={p?.role === 'volunteer' ? 'teal' : 'purple'} />
+                <Avatar initials={name.slice(0, 1).toUpperCase()} hue={p?.role === 'volunteer' ? 'clay' : 'ink'} />
                 <View style={{ flex: 1, gap: 2 }}>
                   <Row gap={space.xs} wrap>
                     <T w="semibold">{name}</T>
-                    {c.status === 'connected' ? <Tag label={t('match.connected')} tone="teal" />
-                      : incoming ? <Tag label={t('chat.newRequest')} tone="purple" /> : <Tag label={t('match.pending')} tone="warning" />}
+                    {c.status === 'connected' ? <Tag label={t('match.connected')} tone="clay" />
+                      : incoming ? <Tag label={t('chat.newRequest')} tone="ink" /> : <Tag label={t('match.pending')} tone="warning" />}
                   </Row>
                   {incoming ? <T v="small" color={colors.textMuted}>{t('chat.incoming', { name })}</T> : null}
                 </View>

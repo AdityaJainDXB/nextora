@@ -161,7 +161,7 @@ function AccountSection() {
       <Card>
         <T v="small" color={colors.textMuted}>{t('account.signedInAs')}</T>
         <T lang="en">{user?.email ?? '—'}</T>
-        <Tag label={verified ? t('account.verified') : t('account.notVerified')} tone={verified ? 'teal' : 'warning'} />
+        <Tag label={verified ? t('account.verified') : t('account.notVerified')} tone={verified ? 'clay' : 'warning'} />
         <T v="tiny" color={colors.textMuted}>{t('account.emailPrivate')}</T>
         <View style={{ gap: space.sm, marginTop: space.sm }}>
           <Button kind="secondary" icon="log-out-outline" label={t('account.signOut')} disabled={busy} onPress={() => run(async () => { await signOutHere(); router.replace('/'); })} />

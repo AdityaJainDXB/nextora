@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T17:29:25.635Z",
+  "title": "Design System: NEXTORA",
+  "extensions": {
+    "colorMeta": {
+      "harbour-ink": {
+        "role": "primary",
+        "displayName": "Harbour Ink",
+        "canonical": "#16233F",
+        "tonalRamp": [
+          "#1A2233",
+          "#29395B",
+          "#365087",
+          "#4065B4",
+          "#6C89C6",
+          "#9CADD3",
+          "#C9D1E4",
+          "#EFF1F6"
+        ]
+      },
+      "harbour-ink-soft": {
+        "role": "primary",
+        "displayName": "Harbour Ink Soft",
+        "canonical": "#E6EAF2",
+        "tonalRamp": [
+          "#1E232F",
+          "#323D53",
+          "#445679",
+          "#546EA0",
+          "#7C8FB6",
+          "#A6B2CA",
+          "#CDD3DF",
+          "#F0F1F5"
+        ]
+      },
+      "desert-clay": {
+        "role": "secondary",
+        "displayName": "Desert Clay",
+        "canonical": "#B4532A",
+        "tonalRamp": [
+          "#372016",
+          "#633522",
+          "#92492B",
+          "#C55C30",
+          "#D3825F",
+          "#DBA994",
+          "#E8CFC5",
+          "#F7F0EE"
+        ]
+      },
+      "desert-clay-text": {
+        "role": "secondary",
+        "displayName": "Desert Clay Text",
+        "canonical": "#8A3A18",
+        "tonalRamp": [
+          "#391F14",
+          "#67341E",
+          "#994724",
+          "#CF5826",
+          "#DA7F58",
+          "#E0A78F",
+          "#EACEC2",
+          "#F8F0ED"
+        ]
+      },
+      "desert-clay-soft": {
+        "role": "secondary",
+        "displayName": "Desert Clay Soft",
+        "canonical": "#F4E6DD",
+        "tonalRamp": [
+          "#342319",
+          "#5D3D28",
+          "#895534",
+          "#B86D3D",
+          "#C88F6A",
+          "#D5B19A",
+          "#E5D3C8",
+          "#F6F1EE"
+        ]
+      },
+      "desert-clay-on-dark": {
+        "role": "secondary",
+        "displayName": "Desert Clay On Dark",
+        "canonical": "#F0B08E",
+        "tonalRamp": [
+          "#3A2012",
+          "#6A361B",
+          "#9E4B1F",
+          "#D65E1E",
+          "#E08352",
+          "#E3AA8C",
+          "#ECD0C1",
+          "#F8F0EC"
+        ]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#141A26",
+        "tonalRamp": [
+          "#1E242E",
+          "#323D52",
+          "#445678",
+          "#556EA0",
+          "#7C8FB6",
+          "#A6B2C9",
+          "#CDD3DF",
+          "#F0F1F5"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#F7F5F0",
+        "tonalRamp": [
+          "#2E2A1E",
+          "#524932",
+          "#786945",
+          "#9F8A56",
+          "#B5A57D",
+          "#C9BFA6",
+          "#DFDACE",
+          "#F5F3F0"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5E5E5E",
+          "#7A7A7A",
+          "#999999",
+          "#B8B8B8",
+          "#D6D6D6",
+          "#F2F2F2"
+        ]
+      },
+      "sand": {
+        "role": "neutral",
+        "displayName": "Sand",
+        "canonical": "#EFEBE3",
+        "tonalRamp": [
+          "#2D291F",
+          "#504734",
+          "#756648",
+          "#9B855A",
+          "#B2A180",
+          "#C7BDA8",
+          "#DED9CE",
+          "#F4F3F0"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "#E2DDD3",
+        "tonalRamp": [
+          "#2C2821",
+          "#4D4638",
+          "#6F644D",
+          "#938362",
+          "#AC9F86",
+          "#C3BCAC",
+          "#DCD8D0",
+          "#F4F3F1"
+        ]
+      },
+      "slate": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "#545B6B",
+        "tonalRamp": [
+          "#232529",
+          "#3C4049",
+          "#545A68",
+          "#6C7589",
+          "#8E95A4",
+          "#B1B5BE",
+          "#D3D5DA",
+          "#F1F2F3"
+        ]
+      },
+      "mist-on-dark": {
+        "role": "neutral",
+        "displayName": "Mist On Dark",
+        "canonical": "#C9D0DE",
+        "tonalRamp": [
+          "#20242D",
+          "#363E4F",
+          "#4A5872",
+          "#5D7197",
+          "#8392AF",
+          "#AAB3C5",
+          "#CFD4DD",
+          "#F0F2F4"
+        ]
+      },
+      "disabled": {
+        "role": "neutral",
+        "displayName": "Disabled",
+        "canonical": "#6B6878",
+        "tonalRamp": [
+          "#252428",
+          "#403F46",
+          "#5B5864",
+          "#757283",
+          "#9592A0",
+          "#B5B4BC",
+          "#D5D4D8",
+          "#F2F2F3"
+        ]
+      },
+      "success": {
+        "role": "status",
+        "displayName": "Success",
+        "canonical": "#126B63",
+        "tonalRamp": [
+          "#143936",
+          "#1D6761",
+          "#239A8F",
+          "#25D0C1",
+          "#57DBCF",
+          "#8FE0D9",
+          "#C2EAE7",
+          "#EDF8F7"
+        ]
+      },
+      "warning": {
+        "role": "status",
+        "displayName": "Warning",
+        "canonical": "#8A5A00",
+        "tonalRamp": [
+          "#402E0C",
+          "#76520E",
+          "#B2780B",
+          "#F39F02",
+          "#F6B53C",
+          "#F1C97E",
+          "#F3DFBA",
+          "#FAF5EB"
+        ]
+      },
+      "warning-soft": {
+        "role": "status",
+        "displayName": "Warning Soft",
+        "canonical": "#FFF2D6",
+        "tonalRamp": [
+          "#40300C",
+          "#76550E",
+          "#B27D0B",
+          "#F3A602",
+          "#F6BB3C",
+          "#F1CD7E",
+          "#F3E1BA",
+          "#FAF5EB"
+        ]
+      },
+      "danger": {
+        "role": "status",
+        "displayName": "Danger",
+        "canonical": "#B3261E",
+        "tonalRamp": [
+          "#391614",
+          "#67211D",
+          "#9A2923",
+          "#D02E25",
+          "#DB5E57",
+          "#E0938F",
+          "#EAC4C2",
+          "#F8EDED"
+        ]
+      },
+      "danger-soft": {
+        "role": "status",
+        "displayName": "Danger Soft",
+        "canonical": "#FBE4E2",
+        "tonalRamp": [
+          "#3A1612",
+          "#6A211B",
+          "#9D291F",
+          "#D52E1F",
+          "#DF5E53",
+          "#E3938C",
+          "#ECC4C1",
+          "#F8EDED"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Welcome headline only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "One screen title per screen."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sheet titles, section heads, date-badge day."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All reading text, inputs; button labels at 600."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, chips, inline links, small buttons."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Tags, tab labels, hints."
+      }
+    },
+    "shadows": [
+      {
+        "name": "none",
+        "value": "none",
+        "purpose": "Cards are flat; the shadow token has opacity 0. Depth comes from 1px Rule borders and tonal fills."
+      },
+      {
+        "name": "scrim",
+        "value": "rgba(22,35,63,0.45)",
+        "purpose": "Behind bottom sheets (scrim token)."
+      },
+      {
+        "name": "assistant-ambient",
+        "value": "0 8px 16px rgba(20,26,38,0.06)",
+        "purpose": "Ask NEXTORA voice card only; the one shadowed element."
+      }
+    ],
+    "motion": [
+      {
+        "name": "tab-drop-spring",
+        "value": "spring(friction 8, tension 90)",
+        "purpose": "Active tab drop sliding to the selected tab."
+      },
+      {
+        "name": "press",
+        "value": "scale(0.985), opacity 0.92",
+        "purpose": "Pressable card feedback."
+      },
+      {
+        "name": "progress-fill",
+        "value": "300ms linear",
+        "purpose": "Checklist progress bar."
+      },
+      {
+        "name": "sunrise",
+        "value": "900ms cubic ease-out, translateY 40px to 0",
+        "purpose": "Welcome illustration sun rising."
+      },
+      {
+        "name": "toast-dwell",
+        "value": "2400ms",
+        "purpose": "Toast auto-dismiss."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "frame",
+        "value": "640px",
+        "purpose": "Maximum reading width; single column everywhere."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The official next step.",
+      "html": "<button class=\"ds-btn-primary\">Continue</button>",
+      "css": ".ds-btn-primary{font-family: 'Noto Sans', system-ui, sans-serif;background:#16233F;color:#fff;border:none;border-radius:6px;min-height:44px;padding:10px 16px;font-size:16px;font-weight:600;transition:opacity .15s}.ds-btn-primary:hover,.ds-btn-primary:active{opacity:.9}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 2px #B4532A}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Default for go-to actions in lists.",
+      "html": "<button class=\"ds-btn-secondary\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M9 6l6 6-6 6\"/></svg>Guides for living here</button>",
+      "css": ".ds-btn-secondary{font-family: 'Noto Sans', system-ui, sans-serif;display:inline-flex;align-items:center;gap:8px;background:#F7F5F0;color:#141A26;border:1px solid #E2DDD3;border-radius:6px;min-height:44px;padding:10px 16px;font-size:16px;font-weight:600;transition:background .15s}.ds-btn-secondary:hover,.ds-btn-secondary:active{background:#F4E6DD}.ds-btn-secondary:focus-visible{outline:none;box-shadow:0 0 0 2px #B4532A}"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Multi-select choice; selected fills with ink.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\">Cooking</button><button class=\"ds-chip is-on\">✓ Arabic</button></div>",
+      "css": ".ds-chips{display:flex;gap:8px}.ds-chip{font-family: 'Noto Sans', system-ui, sans-serif;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid #E2DDD3;background:#fff;color:#141A26;font-size:14px;font-weight:600}.ds-chip:hover{border-color:#16233F}.ds-chip.is-on{background:#16233F;border-color:#16233F;color:#fff}.ds-chip:focus-visible{outline:none;box-shadow:0 0 0 2px #B4532A}"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Review status and labels.",
+      "html": "<span class=\"ds-tag ds-tag-clay\">Human-reviewed</span> <span class=\"ds-tag\">Not yet reviewed</span>",
+      "css": ".ds-tag{font-family: 'Noto Sans', system-ui, sans-serif;display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;line-height:18px;font-weight:600;background:#EFEBE3;color:#545B6B}.ds-tag-clay{background:#F4E6DD;color:#8A3A18}"
+    },
+    {
+      "name": "Checklist Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "One step of the First 48 hours checklist.",
+      "html": "<div class=\"ds-check-card\"><button class=\"ds-check\" aria-label=\"Mark done\">1</button><div><div class=\"ds-check-title\">Get a local SIM card</div><div class=\"ds-check-desc\">Bring your passport and visa page.</div></div></div>",
+      "css": ".ds-check-card{font-family: 'Noto Sans', system-ui, sans-serif;display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid #E2DDD3;border-radius:12px;padding:16px;max-width:420px}.ds-check{width:44px;height:44px;flex:none;border-radius:50%;border:2px solid #E2DDD3;background:#fff;color:#545B6B;font-weight:700;font-size:14px}.ds-check:hover{border-color:#8A3A18}.ds-check:focus-visible{outline:none;box-shadow:0 0 0 2px #B4532A}.ds-check-title{color:#141A26;font-weight:600;font-size:16px;line-height:25px}.ds-check-desc{color:#545B6B;font-size:14px;line-height:21px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled input.",
+      "html": "<label class=\"ds-field\"><span>Display name</span><input placeholder=\"How others see you\"></label>",
+      "css": ".ds-field{font-family: 'Noto Sans', system-ui, sans-serif;display:flex;flex-direction:column;gap:4px;max-width:360px}.ds-field span{font-size:14px;font-weight:600;color:#141A26}.ds-field input{min-height:44px;padding:10px 12px;border:1px solid #E2DDD3;border-radius:10px;background:#fff;color:#141A26;font-size:16px;font-family:inherit}.ds-field input::placeholder{color:#545B6B}.ds-field input:focus-visible{outline:none;border-color:#B4532A;box-shadow:0 0 0 2px rgba(180,83,42,.25)}"
+    },
+    {
+      "name": "Tab Bar",
+      "kind": "nav",
+      "refersTo": "tab-bar",
+      "description": "Floating pill; only the active tab shows its label.",
+      "html": "<nav class=\"ds-tabs\"><a class=\"is-on\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M8 12l3 3 5-6\"/></svg><span>Home</span></a><a><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"4\" y=\"4\" width=\"6\" height=\"6\"/><rect x=\"14\" y=\"4\" width=\"6\" height=\"6\"/><rect x=\"4\" y=\"14\" width=\"6\" height=\"6\"/><rect x=\"14\" y=\"14\" width=\"6\" height=\"6\"/></svg></a><a><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 5h16v11H9l-5 4z\"/></svg></a><a><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c1-4 15-4 16 0\"/></svg></a></nav>",
+      "css": ".ds-tabs{font-family: 'Noto Sans', system-ui, sans-serif;display:flex;gap:2px;padding:6px;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid #E2DDD3;max-width:420px}.ds-tabs a{flex:1;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:999px;color:#545B6B;cursor:pointer;transition:background .25s}.ds-tabs a:hover{color:#141A26}.ds-tabs a.is-on{background:#EFEBE3;border:1px solid #E2DDD3;color:#141A26}.ds-tabs span{font-size:12px;font-weight:600}"
+    },
+    {
+      "name": "Ink Hero Panel",
+      "kind": "custom",
+      "refersTo": "hero-panel",
+      "description": "Home header with progress.",
+      "html": "<div class=\"ds-hero\"><div class=\"ds-hero-sub\">Hello</div><div class=\"ds-hero-h\">Your first 48 hours</div><div class=\"ds-track\"><div class=\"ds-fill\"></div></div><div class=\"ds-hero-p\">3 of 8 done</div></div>",
+      "css": ".ds-hero{font-family: 'Noto Sans', system-ui, sans-serif;background:#16233F;border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:4px;max-width:420px}.ds-hero-sub{color:#C9D0DE;font-size:14px}.ds-hero-h{color:#fff;font-size:24px;line-height:34px;font-weight:700}.ds-track{height:8px;border-radius:4px;background:#EFEBE3;overflow:hidden;margin-top:8px}.ds-fill{width:37%;height:100%;background:#B4532A;transition:width .3s}.ds-hero-p{color:#fff;font-size:14px;font-weight:600}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Welcome Desk",
+    "overview": "NEXTORA should feel like a kind person at an arrivals desk who hands you the right form, in your language, and tells you plainly what to do next. The world is ink on warm paper: a deep Harbour Ink for authority and calm, a single warm Desert Clay for progress and encouragement, and a paper-white ground that keeps every screen quiet enough to read when you are tired and reading in a second language.\n\nDensity is moderate and list-shaped. Screens are a single column of flat, bordered cards inside a 640px reading frame, each card one task or one fact, with a 44px touch target on everything that responds. Personality comes from restraint and honesty rather than decoration: one dark ink hero panel per screen at most, one shape-only illustration (a rising sun over a skyline of plain blocks, with small circles for people gathering), and no photography.\n\nThe system carries 16 languages in their own scripts, including right-to-left Arabic and Urdu. Every visual decision has to survive a line that is twice as long in Malayalam, or mirrored in Urdu.",
+    "keyCharacteristics": [
+      "Ink on warm paper: Harbour Ink and Desert Clay over a paper-white ground.",
+      "Flat at rest: depth from borders and tonal fills, not shadows.",
+      "One column, one task per card, 640px maximum reading width.",
+      "Noto Sans in every script, three weights only.",
+      "A floating pill tab bar whose active \"drop\" springs to the selected tab.",
+      "Honest states: review tags, \"AI-generated\" labels and empty states are first-class visual elements."
+    ],
+    "rules": [
+      {
+        "name": "The Two Voices Rule",
+        "body": "Ink means \"act / this is official\"; clay means \"you made progress\". Do not swap them: a primary button is never clay, and a completed state is never ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The AA Floor Rule",
+        "body": "Every text pair must pass WCAG AA (4.5:1 body, 3:1 large). When clay or ink is needed as text on a ground where it fails, use its `-text` or `-on-dark` variant instead.",
+        "section": "colors"
+      },
+      {
+        "name": "The Right Font For The Script Rule",
+        "body": "Text is always rendered through the `T` component, which picks the Noto family for the language on screen and aligns right in RTL. Official names (for example \"UAE PASS\") stay in Latin Noto Sans inside every language.",
+        "section": "typography"
+      },
+      {
+        "name": "The Three Weights Rule",
+        "body": "Only 400, 600 and 700 are loaded. Do not ask for 300, 500 or 800.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Desk Rule",
+        "body": "Cards are separated by borders and spacing, never by drop shadows. Press feedback is a slight shrink (scale 0.985) and fade (opacity 0.92), not a lift.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do take every colour from `theme/index.ts` (and the matching gluestack variables) and refer to them by role.",
+      "Do keep every pressable at least 44px in both directions, including text links.",
+      "Do render all text through `T` so the right Noto family and reading direction apply, and flip directional icons in RTL.",
+      "Do keep screens to one column inside the 640px frame, with one task or fact per card.",
+      "Do show honesty states visually: review tags on content, an \"AI-generated, may be wrong\" label on assistant answers, and the Empty component (ink-soft icon well plus Slate text) instead of placeholder content.",
+      "Do re-check contrast when you add a text pair, and keep `docs/CONTRAST.md` in step with the current palette."
+    ],
+    "donts": [
+      "Don't add drop shadows to cards; depth is borders and tonal fills. The Ask NEXTORA voice card is the only exception.",
+      "Don't use Desert Clay for primary actions, or Harbour Ink for completion.",
+      "Don't use photography or people imagery; illustration stays shape-only.",
+      "Don't add a second typeface; Noto Sans in each script is the only family.",
+      "Don't hard-code colours in screens. Translucent fills are tokens too: `accentOnDarkSoft` (trust strip on ink), `glassOnDark` (dark tab pill) and `scrim` (behind sheets).",
+      "Don't bring back the retired names `aubergine`, `purple`, `teal`, `navy` or `offWhite`. The palette is `ink`, `night`, `paper` and `clay`; tag tones and avatar hues are `ink` and `clay`.",
+      "Don't design a dark theme from the gluestack `dark` variables; they are unused boilerplate. Dark appears only as the ink hero."
+    ]
+  }
+}

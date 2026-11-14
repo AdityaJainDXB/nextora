@@ -117,12 +117,12 @@ export function AssistantCard(p: AssistantCardProps) {
     <View style={styles.card}>
       {/* Voice glow rising from the bottom of the card. */}
       <Animated.View pointerEvents="none" style={[styles.glowWrap, { opacity: glow }]}>
-        <View style={[styles.glow, { backgroundColor: palette.teal, opacity: 0.10, height: 90 }]} />
-        <View style={[styles.glow, { backgroundColor: palette.teal, opacity: 0.16, height: 36 }]} />
+        <View style={[styles.glow, { backgroundColor: palette.clay, opacity: 0.10, height: 90 }]} />
+        <View style={[styles.glow, { backgroundColor: palette.clay, opacity: 0.16, height: 36 }]} />
       </Animated.View>
 
       <View style={styles.top}>
-        <Avatar initials="NX" hue="aubergine" size={32} />
+        <Avatar initials="NX" hue="ink" size={32} />
         <View style={{ flex: 1 }}>
           <T w="semibold" lang={p.lang}>{p.name}</T>
           <T v="tiny" color={colors.textMuted} lang={p.lang}>{p.meta}</T>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%', maxWidth: 360, minHeight: 340, alignSelf: 'center', borderRadius: 24, overflow: 'hidden',
     backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border,
-    shadowColor: colors.navy, shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 2,
+    shadowColor: colors.night, shadowOpacity: 0.06, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 2,
   },
   glowWrap: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end' },
   glow: { position: 'absolute', left: -20, right: -20, bottom: -10, borderTopLeftRadius: 200, borderTopRightRadius: 200 },

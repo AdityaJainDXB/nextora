@@ -92,23 +92,6 @@ module.exports = {
         mono: 'var(--font-mono)',
         sans: 'var(--font-sans)',
         serif: 'var(--font-serif)',
-        inter: ['var(--font-inter)'],
-        georgia: ['Georgia'],
-        melno: ['Melno'],
-        andika: [
-          'Andika_400Regular',
-          'Andika_400Regular_Italic',
-          'Andika_700Bold',
-          'Andika_700Bold_Italic',
-        ],
-        outfit: [
-          'Outfit_400Regular',
-          'Outfit_500Medium',
-          'Outfit_600SemiBold',
-          'Outfit_700Bold',
-          'Outfit_800ExtraBold',
-          'Outfit_900Black',
-        ],
       },
       fontWeight: {
         extrablack: '950',

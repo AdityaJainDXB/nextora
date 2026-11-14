@@ -64,7 +64,7 @@ export default function Chat() {
         {/* Header: display name only. Never contact fields. */}
         <Row style={styles.header} gap={space.sm}>
           <IconButton icon={isRTL ? 'arrow-forward' : 'arrow-back'} label={t('common.back')} onPress={back} />
-          <Avatar initials={name.slice(0, 1).toUpperCase()} size={36} hue={people[other]?.role === 'volunteer' ? 'teal' : 'purple'} />
+          <Avatar initials={name.slice(0, 1).toUpperCase()} size={36} hue={people[other]?.role === 'volunteer' ? 'clay' : 'ink'} />
           <T w="semibold" style={{ flex: 1 }} numberOfLines={1}>{name}</T>
           <IconButton icon="flag-outline" label={t('chat.report')} onPress={() => setSheet('report')} />
           <IconButton icon="ban-outline" label={t('chat.block')} onPress={() => setSheet('block')} color={colors.danger} />

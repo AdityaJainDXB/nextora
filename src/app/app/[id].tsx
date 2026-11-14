@@ -46,7 +46,7 @@ export default function AppDetail() {
         <TextBadge text={app.badge} size={64} />
         <View style={{ flex: 1, gap: 4 }}>
           <T v="h1" w="bold" lang="en" accessibilityRole="header">{app.name}</T>
-          <Tag label={t(`appv.cat_${app.category}`)} tone="purple" />
+          <Tag label={t(`appv.cat_${app.category}`)} tone="ink" />
         </View>
       </Row>
       <ReviewTag a={app} />

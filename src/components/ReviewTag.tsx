@@ -7,7 +7,7 @@ import { Tag } from './ui';
 export function ReviewTag({ a }: { a: Parameters<typeof reviewState>[0] }) {
   const { t } = useTranslation();
   const r = reviewState(a);
-  if (r === 'reviewed') return <Tag label={t('appv.reviewedOn', { date: a.reviewedOn })} tone="teal" />;
+  if (r === 'reviewed') return <Tag label={t('appv.reviewedOn', { date: a.reviewedOn })} tone="clay" />;
   if (r === 'needsRecheck') return <Tag label={t('appv.needsRecheck')} tone="warning" />;
   return <Tag label={t('appv.notReviewed')} />;
 }

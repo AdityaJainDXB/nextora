@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     minHeight: touch, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12,
     borderRadius: radius.pill, borderWidth: 1, borderColor: 'rgba(255,255,255,0.3)',
   },
-  trust: { backgroundColor: 'rgba(43,181,168,0.14)', borderRadius: radius.md, padding: space.md, alignItems: 'flex-start' },
+  trust: { backgroundColor: colors.accentOnDarkSoft, borderRadius: radius.md, padding: space.md, alignItems: 'flex-start' },
   persona: {
     flexDirection: 'row', alignItems: 'center', gap: space.md, padding: space.md, minHeight: touch,
     borderRadius: radius.md, borderWidth: 1.5, borderColor: colors.border, backgroundColor: colors.surface,

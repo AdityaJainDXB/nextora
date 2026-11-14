@@ -26,12 +26,12 @@ export function PersonHeader({ p, right }: { p: PublicProfile; right?: React.Rea
   const place = [p.neighbourhood, p.emirate ? t(`emirates.${p.emirate}`) : null].filter(Boolean).join(', ');
   return (
     <Row gap={space.md} style={{ alignItems: 'flex-start' }}>
-      <Avatar initials={p.displayName.slice(0, 1).toUpperCase()} hue={p.role === 'volunteer' ? 'teal' : 'purple'} />
+      <Avatar initials={p.displayName.slice(0, 1).toUpperCase()} hue={p.role === 'volunteer' ? 'clay' : 'ink'} />
       <View style={{ flex: 1, gap: 2 }}>
         <Row gap={space.xs} wrap>
           <T w="semibold">{p.displayName}</T>
-          <Tag label={p.role === 'volunteer' ? t('match.guide') : t('match.newcomer')} tone={p.role === 'volunteer' ? 'teal' : 'purple'} />
-          {p.isTeam ? <Tag label={t('match.team')} tone="purple" /> : null}
+          <Tag label={p.role === 'volunteer' ? t('match.guide') : t('match.newcomer')} tone={p.role === 'volunteer' ? 'clay' : 'ink'} />
+          {p.isTeam ? <Tag label={t('match.team')} tone="ink" /> : null}
         </Row>
         {place ? <T v="small" color={colors.textMuted}>{place}</T> : null}
         {p.languages?.length ? <T v="small" color={colors.textMuted}>{t('match.speaks')}: {langNames(p.languages)}</T> : null}

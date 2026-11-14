@@ -71,7 +71,7 @@ export function ChecklistActions({ id }: { id: string }) {
       {a.providers?.map((p) => <ProviderRow key={p.name} p={p} />)}
       {a.providers?.length ? (
         <Row wrap gap={space.xs}>
-          <Tag label={reviewed ? t('appv.reviewedOn', { date: a.reviewedOn }) : t('actions.notChecked')} tone={reviewed ? 'teal' : 'warning'} />
+          <Tag label={reviewed ? t('appv.reviewedOn', { date: a.reviewedOn }) : t('actions.notChecked')} tone={reviewed ? 'clay' : 'warning'} />
           <T v="tiny" color={colors.textMuted} style={{ flex: 1 }}>{t('appv.confirm')}</T>
         </Row>
       ) : null}

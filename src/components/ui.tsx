@@ -47,7 +47,7 @@ export function Button({
   // Built on gluestack-ui's Button; NEXTORA tokens live in gs/gluestack-ui-provider/config.ts.
   const variant = ({ primary: 'default', secondary: 'outline', ghost: 'ghost', danger: 'destructive', light: 'secondary', outlineLight: 'outline' } as const)[kind];
   const fg = textColor ?? {
-    primary: colors.textOnDark, secondary: colors.text, ghost: colors.primary, danger: colors.textOnDark, light: colors.navy, outlineLight: colors.textOnDark,
+    primary: colors.textOnDark, secondary: colors.text, ghost: colors.primary, danger: colors.textOnDark, light: colors.night, outlineLight: colors.textOnDark,
   }[kind];
   const { isRTL } = useLang();
   const flip = isRTL && !!icon && /arrow-(forward|back)|chevron|send/.test(icon);
@@ -90,11 +90,11 @@ export function Chip({
   );
 }
 
-export function Tag({ label, tone = 'muted' }: { label: string; tone?: 'muted' | 'teal' | 'purple' | 'warning' | 'danger' }) {
+export function Tag({ label, tone = 'muted' }: { label: string; tone?: 'muted' | 'clay' | 'ink' | 'warning' | 'danger' }) {
   const map = {
     muted: [colors.surfaceAlt, colors.textMuted],
-    teal: [colors.accentSoft, colors.accentText],
-    purple: [colors.primarySoft, colors.primary],
+    clay: [colors.accentSoft, colors.accentText],
+    ink: [colors.primarySoft, colors.primary],
     warning: [colors.warningSoft, colors.warning],
     danger: [colors.dangerSoft, colors.danger],
   }[tone];
@@ -137,8 +137,8 @@ export function Progress({ value, label }: { value: number; label: string }) {
   );
 }
 
-const hueColor = { purple: colors.purple, teal: colors.accentText, navy: colors.navy, aubergine: colors.aubergine };
-export function Avatar({ initials, hue = 'purple', size = 48 }: { initials: string; hue?: keyof typeof hueColor; size?: number }) {
+const hueColor = { ink: colors.ink, clay: colors.accentText, night: colors.night };
+export function Avatar({ initials, hue = 'ink', size = 48 }: { initials: string; hue?: keyof typeof hueColor; size?: number }) {
   return (
     <View
       accessibilityElementsHidden
@@ -294,14 +294,14 @@ export const styles = StyleSheet.create({
     minHeight: touch, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md,
     paddingHorizontal: 12, paddingVertical: 10, backgroundColor: colors.surface, color: colors.text, fontSize: 16,
   },
-  scrim: { flex: 1, backgroundColor: 'rgba(15,27,61,0.45)' },
+  scrim: { flex: 1, backgroundColor: colors.scrim },
   sheet: {
     backgroundColor: colors.bg, borderTopLeftRadius: radius.lg, borderTopRightRadius: radius.lg,
     padding: space.lg, maxHeight: '85%', width: '100%', maxWidth: 640, alignSelf: 'center',
   },
   iconBtn: { width: touch, height: touch, alignItems: 'center', justifyContent: 'center', borderRadius: touch / 2 },
   toast: {
-    position: 'absolute', bottom: space.lg, left: space.md, right: space.md, backgroundColor: colors.navy,
+    position: 'absolute', bottom: space.lg, left: space.md, right: space.md, backgroundColor: colors.night,
     borderRadius: radius.md, padding: space.md, flexDirection: 'row', gap: space.sm, alignItems: 'center',
   },
 });

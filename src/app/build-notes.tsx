@@ -27,7 +27,7 @@ export default function BuildNotes() {
           <Card key={e.id}>
             <Row style={{ justifyContent: 'space-between' }} wrap>
               <T v="tiny" w="semibold" color={colors.textMuted}>{t('build.date')}: <T v="tiny" lang="en">{e.date}</T></T>
-              <Tag label={e.fixedBy === 'human' ? t('build.byHuman') : t('build.bySelf')} tone={e.fixedBy === 'human' ? 'teal' : 'warning'} />
+              <Tag label={e.fixedBy === 'human' ? t('build.byHuman') : t('build.bySelf')} tone={e.fixedBy === 'human' ? 'clay' : 'warning'} />
             </Row>
             <View style={{ gap: 2 }}>
               <T v="small" w="semibold">{t('build.wrong')}</T>

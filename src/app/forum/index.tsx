@@ -71,8 +71,8 @@ export default function ForumList() {
             <Card key={p.id} onPress={() => router.push(`/forum/${p.id}`)}
               a11y={`${p.title}. ${t(`topic.${p.topic}`)}, ${t(`emirates.${p.emirate}`)}. ${t('forum.upvotesCount', { count: p.upvotes })}`}>
               <Row wrap gap={space.xs}>
-                <Tag label={t(`topic.${p.topic}`)} tone="purple" />
-                <Tag label={t(`emirates.${p.emirate}`)} tone="teal" />
+                <Tag label={t(`topic.${p.topic}`)} tone="ink" />
+                <Tag label={t(`emirates.${p.emirate}`)} tone="clay" />
                 {p.isSample ? <Tag label={t('forum.sampleBadge')} tone="warning" /> : null}
               </Row>
               <T w="semibold" lang={p.language} numberOfLines={2}>{p.title}</T>

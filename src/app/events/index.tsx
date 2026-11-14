@@ -46,7 +46,7 @@ export default function Events() {
                   <DateBadge date={e.startsAt} lang={shown} />
                   <View style={{ flex: 1, gap: space.xs }}>
                     <Row wrap gap={space.xs}>
-                      <Tag label={t(`emirates.${e.emirate}`)} tone="purple" />
+                      <Tag label={t(`emirates.${e.emirate}`)} tone="ink" />
                       {e.status === 'cancelled' ? <Tag label={t('events.cancelled')} tone="danger" /> : null}
                       {e.isSample ? <Tag label={t('forum.sampleBadge')} tone="warning" /> : null}
                     </Row>
