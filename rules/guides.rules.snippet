@@ -1,0 +1,11 @@
+    // ---------- event RSVPs (merge INSIDE `match /content/{type}/items/{id}` or as a sibling) ----------
+    // Each signed-in user may read and write only their own RSVP on an event.
+    match /content/events/items/{eventId}/rsvps/{uid} {
+      allow read: if isUser(uid) || isMod();
+      allow create, update: if isUser(uid)
+        && exists(/databases/$(database)/documents/content/events/items/$(eventId))
+        && onlyKeys(['status', 'at'])
+        && request.resource.data.status in ['going', 'maybe', 'notNow']
+        && request.resource.data.at == request.time;
+      allow delete: if isUser(uid);
+    }

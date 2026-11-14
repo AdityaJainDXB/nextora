@@ -1,0 +1,7 @@
+{
+  "apiKey": "demo-key",
+  "authDomain": "demo-nextora.firebaseapp.com",
+  "projectId": "demo-nextora",
+  "appId": "demo-app",
+  "storageBucket": "demo-nextora.appspot.com"
+}

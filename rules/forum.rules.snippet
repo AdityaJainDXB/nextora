@@ -1,0 +1,105 @@
+    // ---------- community forum (paste before "Everything else is closed.") ----------
+    // Uses only helpers defined above: signedIn, isUser, verified, isMod, onlyKeys,
+    // changedOnly, str, safeText, stamped. Anything not listed here stays denied.
+    function forumPost(pid) { return /databases/$(database)/documents/forumPosts/$(pid); }
+    function forumVote(pid, uid) { return /databases/$(database)/documents/forumPosts/$(pid)/votes/$(uid); }
+    function forumTopic(t) {
+      return t in ['housing', 'schoolsFamily', 'jobsWork', 'visasPaperwork', 'health', 'foodGroceries', 'transport', 'events', 'newcomers'];
+    }
+    // Sample content may only be written by moderators (scripts/seedSample.ts).
+    function sampleOk(d) { return d.isSample is bool && (d.isSample == false || isMod()); }
+
+    match /forumPosts/{pid} {
+      // Hidden posts are visible to moderators and their author only. Lists of
+      // other people's posts must filter hidden == false.
+      allow read: if signedIn()
+        && (resource.data.hidden == false || isMod() || resource.data.authorUid == request.auth.uid);
+      allow create: if verified()
+        && onlyKeys(['authorUid', 'displayName', 'topic', 'emirate', 'language', 'title', 'body',
+                     'createdAt', 'updatedAt', 'hidden', 'deleted', 'isSample', 'upvotes'])
+        && request.resource.data.authorUid == request.auth.uid
+        && str(request.resource.data.displayName, 1, 40)
+        && forumTopic(request.resource.data.topic)
+        && request.resource.data.emirate in ['abudhabi', 'dubai', 'sharjah', 'ajman', 'uaq', 'rak', 'fujairah']
+        && str(request.resource.data.language, 2, 3)
+        && str(request.resource.data.title, 5, 120) && safeText(request.resource.data.title)
+        && str(request.resource.data.body, 1, 4000) && safeText(request.resource.data.body)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.hidden == false
+        && request.resource.data.deleted == false
+        && request.resource.data.upvotes == 0
+        && sampleOk(request.resource.data)
+        // Moderators seeding sample content skip the 60 s stamp; everyone else needs it.
+        && (request.resource.data.isSample == true || stamped('lastPostAt'));
+      allow update: if signedIn() && (
+        // Author edits title/body within 15 minutes of posting.
+        (request.auth.uid == resource.data.authorUid && verified()
+          && resource.data.deleted == false
+          && request.time < resource.data.createdAt + duration.value(15, 'm')
+          && changedOnly(['title', 'body', 'updatedAt', 'editedAt'])
+          && str(request.resource.data.title, 5, 120) && safeText(request.resource.data.title)
+          && str(request.resource.data.body, 1, 4000) && safeText(request.resource.data.body)
+          && request.resource.data.updatedAt == request.time
+          && request.resource.data.editedAt == request.time)
+        // Author or moderator soft-deletes: a tombstone with empty title and body.
+        || ((request.auth.uid == resource.data.authorUid || isMod())
+          && changedOnly(['deleted', 'title', 'body', 'updatedAt'])
+          && request.resource.data.deleted == true
+          && request.resource.data.title == '' && request.resource.data.body == ''
+          && request.resource.data.updatedAt == request.time)
+        // Moderator hides or restores.
+        || (isMod() && changedOnly(['hidden', 'updatedAt'])
+          && request.resource.data.hidden is bool
+          && request.resource.data.updatedAt == request.time)
+        // Upvote: +1 only with my vote doc created in the same batch; -1 only with it removed.
+        || (verified() && changedOnly(['upvotes']) && (
+          (request.resource.data.upvotes == resource.data.upvotes + 1
+            && !exists(forumVote(pid, request.auth.uid)) && existsAfter(forumVote(pid, request.auth.uid)))
+          || (request.resource.data.upvotes == resource.data.upvotes - 1
+            && exists(forumVote(pid, request.auth.uid)) && !existsAfter(forumVote(pid, request.auth.uid)))))
+      );
+      // Hard delete only to remove sample content.
+      allow delete: if isMod() && resource.data.isSample == true;
+
+      match /replies/{rid} {
+        allow read: if signedIn();
+        allow create: if verified()
+          && onlyKeys(['authorUid', 'displayName', 'body', 'createdAt', 'deleted', 'isSample'])
+          && request.resource.data.authorUid == request.auth.uid
+          && str(request.resource.data.displayName, 1, 40)
+          && str(request.resource.data.body, 1, 2000) && safeText(request.resource.data.body)
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.deleted == false
+          && exists(forumPost(pid))
+          && get(forumPost(pid)).data.deleted == false
+          && sampleOk(request.resource.data)
+          && (request.resource.data.isSample == true || stamped('lastReplyAt'));
+        allow update: if signedIn()
+          && (request.auth.uid == resource.data.authorUid || isMod())
+          && changedOnly(['deleted', 'body'])
+          && request.resource.data.deleted == true && request.resource.data.body == '';
+        allow delete: if isMod() && resource.data.isSample == true;
+      }
+
+      match /votes/{uid} {
+        allow read: if isUser(uid) || isMod(); // moderators list votes to remove sample posts
+        // One vote per person: a second create is an update, which is denied.
+        allow create: if verified() && isUser(uid)
+          && onlyKeys(['at']) && request.resource.data.at == request.time
+          && getAfter(forumPost(pid)).data.upvotes == get(forumPost(pid)).data.upvotes + 1;
+        allow update: if false;
+        allow delete: if (isUser(uid)
+            && getAfter(forumPost(pid)).data.upvotes == get(forumPost(pid)).data.upvotes - 1)
+          // Removing sample content: a moderator clears votes on a sample post.
+          || (isMod() && get(forumPost(pid)).data.isSample == true);
+      }
+    }
+
+    // Saved posts: private to their owner.
+    match /users/{uid}/saves/{postId} {
+      allow read, delete: if isUser(uid);
+      allow create: if isUser(uid) && onlyKeys(['at']) && request.resource.data.at == request.time;
+      allow update: if false;
+    }
+

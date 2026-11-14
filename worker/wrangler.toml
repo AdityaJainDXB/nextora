@@ -1,0 +1,22 @@
+name = "nextora-ai"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+FIREBASE_PROJECT_IDS = "nextora-dev-68159,nextora-prod"
+# Comma list of exact origins (no wildcard). Requests with no Origin header (native app) are allowed.
+ALLOWED_ORIGINS = "http://localhost:8081,http://localhost:19006,https://nextora-psi.vercel.app"
+# Filled by `node scripts/worker/setup.mjs` from Gemini models.list. Ordered best-first.
+GEMINI_MODELS = "gemini-3.8-flash,gemini-3.7-flash,gemini-3.5-flash-lite"
+GEMINI_AUDIO_MODELS = "gemini-3.8-flash,gemini-3.7-flash,gemini-3.5-flash-lite"
+# Only "true" for local emulator testing; then unsigned tokens are accepted for demo-* projects only.
+EMULATOR_MODE = "false"
+
+# Per-user rate limits + dead-model cache. Create with:
+#   npx wrangler kv namespace create RATE
+# then uncomment and paste the id below. If unbound, the Worker falls back to
+# per-isolate memory (best effort only: not shared across isolates/regions).
+[[kv_namespaces]]
+binding = "RATE"
+id = "af17a8460f7d424b8c0928cc23822cf3"

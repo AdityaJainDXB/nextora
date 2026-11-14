@@ -1,0 +1,191 @@
+{
+  "_status": "DRAFT written by AI at the owner's request. Not checked by a person. Local test backend only; blocked from production by the PLACEHOLDER source.",
+  "items": [
+    {
+      "id": "before-docs",
+      "phase": "before",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "title": "Gather your documents",
+      "body": "Keep your passport, entry permit or visa papers, employment or study letters, and certified copies of degrees and marriage or birth certificates together. Scan copies to a safe place.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "before-money",
+      "phase": "before",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "title": "Plan your first month of money",
+      "body": "Arrange a way to pay before you have a local bank account, such as a card that works abroad. Rents are often asked for in advance, so check your budget with your employer or sponsor.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "h48-sim",
+      "phase": "first48h",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "title": "Get a local phone number",
+      "body": "Most other steps ask for a UAE mobile number. Compare the providers in the First 48 hours checklist.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "h48-transport",
+      "phase": "first48h",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving"
+      ],
+      "title": "Learn how to get around",
+      "body": "Try a short trip on public transport or a ride-hailing app so you know how to reach work, school or the clinic.",
+      "appIds": [
+        "rta",
+        "careem",
+        "nolpay"
+      ],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "h48-health",
+      "phase": "first48h",
+      "persona": [
+        "justArrived",
+        "family"
+      ],
+      "title": "Know where to go for health care",
+      "body": "Find the nearest clinic and pharmacy that accept your insurance, and save the address before you need it.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "m1-id",
+      "phase": "firstMonth",
+      "persona": [
+        "justArrived",
+        "family"
+      ],
+      "title": "Follow your residency and Emirates ID steps",
+      "body": "Your employer, sponsor or university usually guides the medical test, biometrics and Emirates ID. Keep every receipt and reference number. Always confirm steps in the official app or website.",
+      "appIds": [
+        "uaepass",
+        "icp"
+      ],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "m1-bank",
+      "phase": "firstMonth",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving"
+      ],
+      "title": "Open a bank account",
+      "body": "Banks usually ask for your Emirates ID or residency papers and a salary or employment letter. Ask your employer which banks they work with.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "m1-home",
+      "phase": "firstMonth",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving"
+      ],
+      "title": "Set up your home",
+      "body": "Once you have a tenancy contract, set up electricity and water with the provider for your emirate, and internet with a telecom provider.",
+      "appIds": [
+        "dewa"
+      ],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "m1-school",
+      "phase": "firstMonth",
+      "persona": [
+        "family"
+      ],
+      "title": "Start school applications early",
+      "body": "Popular schools can have waiting lists. Shortlist schools near home and check them with the official school regulator for your emirate.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "d90-community",
+      "phase": "first90days",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "title": "Find your people",
+      "body": "Join a community group, a faith community or a sports club, and say hello to a local guide on NEXTORA.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "d90-review",
+      "phase": "first90days",
+      "persona": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "title": "Check your paperwork",
+      "body": "Make sure your residency, Emirates ID, tenancy and insurance details all match, and note their renewal dates.",
+      "appIds": [],
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    }
+  ]
+}

@@ -1,0 +1,555 @@
+{
+  "_status": "DRAFT written by AI during the V1 build. NOT supplied or verified by a person. Do not load. A person must check each entry, add official URLs and a source, then move it to data/seed/apps.json.",
+  "items": [
+    {
+      "id": "talabat",
+      "name": "talabat",
+      "badge": "TB",
+      "category": "food",
+      "why": "Used for restaurant delivery and everyday grocery orders.",
+      "features": [
+        "Restaurant delivery",
+        "Grocery orders",
+        "Order tracking"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Create an account",
+        "Add your delivery address"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "family",
+        "moving"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "carrefour",
+      "name": "Carrefour UAE",
+      "badge": "CF",
+      "category": "food",
+      "why": "Used to order a weekly grocery shop for home delivery.",
+      "features": [
+        "Grocery delivery",
+        "Household items",
+        "Order history"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Create an account",
+        "Add your delivery address"
+      ],
+      "suggestedFor": [
+        "family",
+        "justArrived"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "instashop",
+      "name": "InstaShop",
+      "badge": "IS",
+      "category": "food",
+      "why": "Used to order from nearby supermarkets and pharmacies.",
+      "features": [
+        "Nearby stores",
+        "Pharmacy items",
+        "Scheduled delivery"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Create an account",
+        "Choose a nearby store"
+      ],
+      "suggestedFor": [
+        "moving",
+        "belong"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "careem",
+      "name": "Careem",
+      "badge": "CR",
+      "category": "transport",
+      "why": "A multi-service app many residents use for rides and deliveries.",
+      "features": [
+        "Ride-hailing",
+        "Food delivery",
+        "Payments in app"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Verify your phone number",
+        "Add a payment method"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "uber",
+      "name": "Uber",
+      "badge": "UB",
+      "category": "transport",
+      "why": "Used for ride-hailing, often already installed from another country.",
+      "features": [
+        "Ride-hailing",
+        "Fare estimate before booking",
+        "Trip sharing"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Sign in or create an account",
+        "Check your payment method works locally"
+      ],
+      "suggestedFor": [
+        "justArrived"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "rta",
+      "name": "RTA Dubai",
+      "badge": "RTA",
+      "category": "transport",
+      "why": "Dubai public transport journeys, nol card services and other road services.",
+      "features": [
+        "Journey planner",
+        "nol card services",
+        "Public transport information"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Plan a test journey",
+        "Look up nol card options"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "moving",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "nolpay",
+      "name": "nol Pay",
+      "badge": "NOL",
+      "category": "transport",
+      "why": "Used to manage and top up a nol card for Dubai public transport.",
+      "features": [
+        "nol card top-up",
+        "Balance check"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Link your nol card",
+        "Check your balance"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "moving"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "noon",
+      "name": "noon",
+      "badge": "NO",
+      "category": "shopping",
+      "why": "Used for online shopping, from electronics to household basics.",
+      "features": [
+        "Online shopping",
+        "Home delivery",
+        "Order tracking"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Create an account",
+        "Add your delivery address"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "family",
+        "moving"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon.ae",
+      "badge": "AZ",
+      "category": "shopping",
+      "why": "Used for online shopping when setting up a new home.",
+      "features": [
+        "Online shopping",
+        "Home delivery",
+        "Order tracking"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Sign in or create an account",
+        "Add your UAE delivery address"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "bayut",
+      "name": "Bayut",
+      "badge": "BY",
+      "category": "property",
+      "why": "Used to look at rental listings and compare neighbourhoods.",
+      "features": [
+        "Rental listings",
+        "Map search",
+        "Saved searches"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Set your preferred area",
+        "Save a search"
+      ],
+      "suggestedFor": [
+        "moving",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "propertyfinder",
+      "name": "Property Finder",
+      "badge": "PF",
+      "category": "property",
+      "why": "Used to browse homes to rent or buy across the UAE.",
+      "features": [
+        "Rental and sale listings",
+        "Filters by area",
+        "Saved properties"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Set your filters",
+        "Save a few listings to compare"
+      ],
+      "suggestedFor": [
+        "moving",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "dubizzle",
+      "name": "dubizzle",
+      "badge": "DZ",
+      "category": "property",
+      "why": "Used for classifieds, including second-hand furniture and rentals.",
+      "features": [
+        "Classifieds",
+        "Second-hand items",
+        "Property listings"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Create an account",
+        "Turn on alerts for items you need"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "moving",
+        "belong"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "uaepass",
+      "name": "UAE PASS",
+      "badge": "UP",
+      "category": "government",
+      "why": "The national digital identity, used to sign in to many government services.",
+      "features": [
+        "Digital identity sign-in",
+        "Document signing",
+        "Access to government services"
+      ],
+      "needsUaeInfo": true,
+      "needsUaeInfoNote": "Emirates ID",
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Register with your Emirates ID",
+        "Set a PIN and turn on biometrics"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "family",
+        "moving",
+        "belong"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "icp",
+      "name": "UAEICP",
+      "badge": "ICP",
+      "category": "government",
+      "why": "Federal app for identity and residency related services.",
+      "features": [
+        "Identity services",
+        "Residency services",
+        "Application tracking"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Sign in",
+        "Check the status of an application"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "dewa",
+      "name": "DEWA",
+      "badge": "DW",
+      "category": "government",
+      "why": "Dubai electricity and water account services.",
+      "features": [
+        "Bills",
+        "Account services",
+        "Usage information"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Create or link your account",
+        "View your bill"
+      ],
+      "suggestedFor": [
+        "justArrived",
+        "moving",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "dubainow",
+      "name": "DubaiNow",
+      "badge": "DN",
+      "category": "government",
+      "why": "Brings many Dubai government services into one app.",
+      "features": [
+        "Government services in one place",
+        "Bill payments",
+        "Service status"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Sign in",
+        "Explore the services list"
+      ],
+      "suggestedFor": [
+        "moving",
+        "belong"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    },
+    {
+      "id": "tamm",
+      "name": "TAMM",
+      "badge": "TM",
+      "category": "government",
+      "why": "Abu Dhabi government services platform.",
+      "features": [
+        "Abu Dhabi government services",
+        "Service status"
+      ],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "url": null,
+      "setup": [
+        "Install from your app store",
+        "Sign in",
+        "Explore the services list"
+      ],
+      "suggestedFor": [
+        "moving",
+        "justArrived",
+        "family"
+      ],
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "errorLogId": null,
+      "source": null,
+      "nextReviewDue": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null
+    }
+  ]
+}

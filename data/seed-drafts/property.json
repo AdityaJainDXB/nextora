@@ -1,0 +1,71 @@
+{
+  "_status": "DRAFT written by AI at the owner's request. Not checked by a person. Local test backend only; blocked from production by the PLACEHOLDER source.",
+  "items": [
+    {
+      "id": "prop-platforms",
+      "section": "platforms",
+      "title": "Where people look for homes",
+      "body": "Residents often compare listings on property apps and classifieds, and visit areas in person before deciding. Listings can be out of date, so confirm with the agent.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "prop-check-contract",
+      "section": "checklist",
+      "title": "Read the tenancy contract carefully",
+      "body": "Check the rent, the number of payments, the deposit, who pays maintenance, and the notice period. Ask how the contract is registered in your emirate.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "prop-check-agent",
+      "section": "checklist",
+      "title": "Check the agent and the property",
+      "body": "Ask to see the agent's licence and the owner's documents. Never pay before seeing the property and signing a contract.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "prop-check-visit",
+      "section": "checklist",
+      "title": "Visit before you pay",
+      "body": "Check water pressure, air conditioning, parking, noise and the walk to transport or school at the time of day you will use them.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "prop-q-costs",
+      "section": "questions",
+      "title": "Questions to ask about costs",
+      "body": "What is included in the rent? Who pays utility deposits, maintenance and agency fees? Can the rent be paid in more instalments?",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "prop-q-move",
+      "section": "questions",
+      "title": "Questions to ask before moving in",
+      "body": "When will the property be ready? What condition must it be returned in? Is a move-in inspection report provided?",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    }
+  ]
+}

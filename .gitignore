@@ -39,3 +39,30 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Secrets: never commit (NEXTORA V5)
+.env
+.env.*
+*service-account*.json
+*serviceAccount*.json
+*-firebase-adminsdk-*.json
+google-services.prod.json
+GoogleService-Info.prod.plist
+*.p8
+*.p12
+*.mobileprovision
+
+# Firebase emulator logs
+*-debug.log
+.emulator-data/
+
+# Generated output and local state (not source)
+dist-web/
+dist-demo/
+brag-output/
+.emulator-data/
+firebase-debug.log
+firestore-debug.log
+*.log
+e2e/shots/
+config/vercel-project.json

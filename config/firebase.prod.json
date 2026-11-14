@@ -1,0 +1,9 @@
+{
+  "_comment": "Public Firebase Web app config for nextora-prod. This is client configuration, not a secret; never put service-account credentials or AI keys here.",
+  "apiKey": "AIzaSyClaI0HPAnarMJdBL-IR7KnJkO6SbEYW08",
+  "authDomain": "nextora-prod.firebaseapp.com",
+  "projectId": "nextora-prod",
+  "storageBucket": "nextora-prod.firebasestorage.app",
+  "messagingSenderId": "993514612596",
+  "appId": "1:993514612596:web:d5214b04adf1cea09f6e21"
+}

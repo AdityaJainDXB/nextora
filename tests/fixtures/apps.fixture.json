@@ -1,0 +1,49 @@
+{
+  "_note": "TEST FIXTURE. Fake entries for automated tests only. Never loaded outside the local demo- emulator, never shown to real users.",
+  "items": [
+    {
+      "id": "test-fixture-transit",
+      "name": "Example Transit (test fixture)",
+      "badge": "TX",
+      "category": "transport",
+      "why": "Test fixture entry used by automated tests.",
+      "features": ["Fixture feature one", "Fixture feature two"],
+      "needsUaeInfo": null,
+      "needsUaeInfoNote": null,
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": null,
+      "fees": null,
+      "setup": ["Fixture step one", "Fixture step two", "Fixture step three"],
+      "suggestedFor": ["justArrived", "family"],
+      "emirates": ["dubai"],
+      "source": "Test fixture (not real content)",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null,
+      "errorLogId": null
+    },
+    {
+      "id": "test-fixture-gov",
+      "name": "Example Gov Service (test fixture)",
+      "badge": "TG",
+      "category": "government",
+      "why": "Test fixture entry used by automated tests.",
+      "features": ["Fixture feature"],
+      "needsUaeInfo": true,
+      "needsUaeInfoNote": "Fixture note",
+      "iosUrl": null,
+      "androidUrl": null,
+      "webUrl": "https://example.com/fixture",
+      "fees": null,
+      "setup": ["Fixture step one", "Fixture step two"],
+      "suggestedFor": ["moving"],
+      "emirates": null,
+      "source": "Test fixture (not real content)",
+      "reviewedBy": "Fixture Reviewer",
+      "reviewedOn": "2026-01-01",
+      "nextReviewDue": "2026-02-01",
+      "errorLogId": null
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "_status": "DRAFT written by AI at the owner's request. Not checked by a person. Local test backend only; blocked from production by the PLACEHOLDER source.",
+  "items": [
+    {
+      "id": "sch-guide-start",
+      "kind": "guide",
+      "title": "How to choose a school",
+      "body": "Think about curriculum, distance and travel time, language support, and fees. Visit if you can and talk to other parents.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "sch-guide-regulator",
+      "kind": "guide",
+      "title": "Check with the official regulator",
+      "body": "Each emirate has an official school regulator that publishes information about schools. Use it to confirm what a school tells you.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "sch-curriculum",
+      "kind": "curriculum",
+      "title": "Curriculums you will see",
+      "body": "Schools follow different curriculums, such as British, American, Indian, International Baccalaureate, UAE Ministry and others. Ask how each fits your child's past and future schooling.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "sch-docs",
+      "kind": "documents",
+      "title": "Documents schools usually ask for",
+      "body": "Passport and residency copies for the child and parents, Emirates ID if issued, birth certificate, previous school reports and a transfer certificate. Some documents may need attestation, so ask the school.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "sch-questions",
+      "kind": "questions",
+      "title": "Questions to ask a school",
+      "body": "Is there a waiting list? What support is there for children who are new to the language? How do transport and school meals work? What are all the fees?",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    }
+  ]
+}

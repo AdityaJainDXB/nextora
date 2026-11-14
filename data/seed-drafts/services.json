@@ -1,0 +1,38 @@
+{
+  "_status": "DRAFT written by AI at the owner's request. Not checked by a person. Local test backend only; blocked from production by the PLACEHOLDER source.",
+  "items": [
+    {
+      "id": "svc-sim-etisalat",
+      "category": "simInternet",
+      "name": "e& (Etisalat)",
+      "body": "Mobile and home internet provider. Compare plans in the First 48 hours checklist.",
+      "officialUrl": "https://www.etisalat.ae",
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "svc-sim-du",
+      "category": "simInternet",
+      "name": "du",
+      "body": "Mobile and home internet provider.",
+      "officialUrl": "https://www.du.ae",
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    },
+    {
+      "id": "svc-health-tip",
+      "category": "healthcare",
+      "name": "Clinics and pharmacies",
+      "body": "Use \"Clinics near me\" on the Home checklist to open Google Maps around you, then check the clinic accepts your insurance.",
+      "officialUrl": null,
+      "source": "PLACEHOLDER: AI-written draft, awaiting human review",
+      "reviewedBy": null,
+      "reviewedOn": null,
+      "nextReviewDue": null
+    }
+  ]
+}

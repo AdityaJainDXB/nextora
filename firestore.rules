@@ -1,0 +1,461 @@
+rules_version = '2';
+
+// NEXTORA Firestore rules (V7, Firebase Spark plan: no Cloud Functions).
+// Everything that touches another person is enforced here, because there is no
+// server code. Default deny. Tested in tests/rules.test.ts.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- helpers ----------
+    function signedIn() { return request.auth != null; }
+    function isUser(uid) { return signedIn() && request.auth.uid == uid; }
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    // Roles live in roles/{uid}, set by a person in the Firebase console.
+    function roleOf(uid) {
+      return exists(/databases/$(database)/documents/roles/$(uid))
+        ? get(/databases/$(database)/documents/roles/$(uid)).data.role : 'none';
+    }
+    function isMod() { return signedIn() && roleOf(request.auth.uid) in ['moderator', 'admin']; }
+    function blockedEitherWay(a, b) {
+      return exists(/databases/$(database)/documents/blocks/$(a)/blocked/$(b))
+          || exists(/databases/$(database)/documents/blocks/$(b)/blocked/$(a));
+    }
+    function onlyKeys(allowed) { return request.resource.data.keys().hasOnly(allowed); }
+    function changedOnly(keys) { return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys); }
+    function str(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+    function listOf(v, max) { return v is list && v.size() <= max; }
+    // Contact details and links are only shared through the mutual reveal.
+    function safeText(t) {
+      return !t.matches('(?s).*[0-9][0-9 ().+-]{6,}[0-9].*')
+        && !t.matches('(?s).*[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+[.][A-Za-z]{2,}.*')
+        && !t.matches('(?si).*(https?://|www[.]).*');
+    }
+    // A rate-limited write must set limits/{me}.<field> to now in the same batch;
+    // the limits rule enforces the minimum interval.
+    function stamped(field) {
+      return getAfter(/databases/$(database)/documents/limits/$(request.auth.uid)).data[field] == request.time;
+    }
+
+    // ---------- rate limits ----------
+    function stepOk(f, secs) {
+      return !(f in request.resource.data)
+        || (resource != null && f in resource.data && request.resource.data[f] == resource.data[f])
+        || (request.resource.data[f] == request.time
+            && (resource == null || !(f in resource.data) || resource.data[f] < request.time - duration.value(secs, 's')));
+    }
+    match /limits/{uid} {
+      allow read, delete: if isUser(uid);
+      allow create, update: if isUser(uid)
+        && onlyKeys(['lastRequestAt', 'lastMessageAt', 'lastPostAt', 'lastReplyAt', 'lastReportAt', 'lastEventAt'])
+        && stepOk('lastEventAt', 300) && stepOk('lastRequestAt', 30) && stepOk('lastMessageAt', 1) && stepOk('lastPostAt', 60)
+        && stepOk('lastReplyAt', 10) && stepOk('lastReportAt', 10);
+    }
+
+    // ---------- account ----------
+    match /users/{uid} {
+      allow read: if isUser(uid);
+      // Created once, right after the age question; the age itself is never stored.
+      allow create: if isUser(uid)
+        && onlyKeys(['ageConfirmedAt', 'language', 'createdAt'])
+        && request.resource.data.ageConfirmedAt == request.time
+        && request.resource.data.createdAt == request.time
+        && str(request.resource.data.language, 2, 3);
+      allow update: if isUser(uid)
+        && changedOnly(['language', 'consents', 'matchingOn', 'assistantOn', 'showSample'])
+        && (!('consents' in request.resource.data) || request.resource.data.consents is map)
+        && (!('matchingOn' in request.resource.data) || request.resource.data.matchingOn is bool)
+        && (!('assistantOn' in request.resource.data) || request.resource.data.assistantOn is bool)
+        && (!('showSample' in request.resource.data) || request.resource.data.showSample is bool);
+      allow delete: if isUser(uid); // in-app account deletion
+
+      match /private/profile {
+        allow read, delete: if isUser(uid);
+        allow create, update: if isUser(uid)
+          && onlyKeys(['displayName', 'role', 'persona', 'emirate', 'neighbourhood', 'reason',
+                       'interests', 'family', 'languages', 'visibility', 'updatedAt'])
+          && str(request.resource.data.displayName, 1, 24)
+          && request.resource.data.role in ['newcomer', 'volunteer']
+          && request.resource.data.persona in ['justArrived', 'family', 'moving', 'belong']
+          && request.resource.data.emirate in ['abudhabi', 'dubai', 'sharjah', 'ajman', 'uaq', 'rak', 'fujairah']
+          && str(request.resource.data.neighbourhood, 0, 40)
+          && (!('reason' in request.resource.data) || str(request.resource.data.reason, 0, 40))
+          && listOf(request.resource.data.interests, 12)
+          && listOf(request.resource.data.family, 5)
+          && listOf(request.resource.data.languages, 24)
+          && request.resource.data.visibility is map
+          && request.resource.data.updatedAt == request.time;
+      }
+      match /progress/{doc} {
+        allow read, delete: if isUser(uid);
+        allow create, update: if isUser(uid)
+          && doc in ['checklist', 'appSetup']
+          && onlyKeys(['items', 'updatedAt'])
+          && request.resource.data.items is map
+          && request.resource.data.items.size() <= 200
+          && request.resource.data.updatedAt == request.time;
+      }
+      match /consentLog/{id} {
+        allow read, delete: if isUser(uid); // delete only as part of account deletion
+        allow create: if isUser(uid)
+          && onlyKeys(['key', 'granted', 'version', 'at'])
+          && request.resource.data.key in ['analytics', 'notifications', 'aiTranslate', 'aiAssist', 'aiAssistant', 'aiVoice']
+          && request.resource.data.granted is bool
+          && str(request.resource.data.version, 1, 40)
+          && request.resource.data.at == request.time;
+        allow update: if false;
+      }
+      match /notifications/{id} {
+        allow read, delete: if isUser(uid);
+        allow update: if isUser(uid) && changedOnly(['read']) && request.resource.data.read is bool;
+        allow create: if false;
+      }
+    }
+
+    // ---------- public profile: must mirror the visible private fields exactly ----------
+    function priv(uid) { return getAfter(/databases/$(database)/documents/users/$(uid)/private/profile).data; }
+    function mirrors(uid, f) {
+      return !(f in request.resource.data)
+        || (priv(uid).visibility.get(f, false) == true && request.resource.data[f] == priv(uid)[f]);
+    }
+    match /publicProfiles/{uid} {
+      allow get: if isUser(uid) || (verified() && !blockedEitherWay(request.auth.uid, uid));
+      // Listing (matching, directory) needs a verified email; blocks are applied on contact.
+      allow list: if verified() && request.query.limit <= 200;
+      allow create, update: if isUser(uid)
+        && onlyKeys(['displayName', 'role', 'persona', 'isTeam', 'emirate', 'neighbourhood',
+                     'interests', 'family', 'languages', 'updatedAt'])
+        && request.resource.data.displayName == priv(uid).displayName
+        && request.resource.data.role == priv(uid).role
+        && request.resource.data.persona == priv(uid).persona
+        && request.resource.data.isTeam == (roleOf(uid) == 'team')
+        && mirrors(uid, 'emirate') && mirrors(uid, 'neighbourhood') && mirrors(uid, 'interests')
+        && mirrors(uid, 'family') && mirrors(uid, 'languages')
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if isUser(uid);
+    }
+
+    // ---------- matching decisions ----------
+    match /matchDecisions/{uid}/items/{other} {
+      allow read, delete: if isUser(uid);
+      allow create, update: if isUser(uid) && other != uid
+        && onlyKeys(['decision', 'at'])
+        && request.resource.data.decision in ['accepted', 'rejected', 'ignored']
+        && request.resource.data.at == request.time;
+    }
+
+    // ---------- blocks ----------
+    match /blocks/{uid}/blocked/{other} {
+      allow read, delete: if isUser(uid);
+      allow create: if isUser(uid) && other != uid && onlyKeys(['uid', 'at'])
+        && request.resource.data.uid == other && request.resource.data.at == request.time;
+      allow update: if false;
+    }
+
+    // ---------- connections, contact reveal, chat ----------
+    function conn(cid) { return get(/databases/$(database)/documents/connections/$(cid)).data; }
+    function isMember(cid) { return signedIn() && request.auth.uid in conn(cid).members; }
+
+    match /connections/{cid} {
+      allow read: if signedIn() && request.auth.uid in resource.data.members;
+      // Request: id is the sorted pair; verified sender; not blocked; intro without contact details.
+      allow create: if verified()
+        && onlyKeys(['members', 'from', 'to', 'status', 'intro', 'reveal', 'createdAt', 'updatedAt'])
+        && request.resource.data.members.size() == 2
+        && request.resource.data.members[0] < request.resource.data.members[1]
+        && cid == request.resource.data.members[0] + '_' + request.resource.data.members[1]
+        && request.resource.data.from == request.auth.uid
+        && request.auth.uid in request.resource.data.members
+        && request.resource.data.to in request.resource.data.members
+        && request.resource.data.to != request.auth.uid
+        && exists(/databases/$(database)/documents/publicProfiles/$(request.resource.data.to))
+        && !blockedEitherWay(request.auth.uid, request.resource.data.to)
+        && request.resource.data.status == 'pending'
+        && str(request.resource.data.intro, 1, 500) && safeText(request.resource.data.intro)
+        && request.resource.data.reveal == {}
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && stamped('lastRequestAt');
+      allow update: if signedIn() && request.auth.uid in resource.data.members && (
+        // The recipient accepts or declines.
+        (request.auth.uid == resource.data.to && resource.data.status == 'pending'
+          && changedOnly(['status', 'updatedAt'])
+          && request.resource.data.status in ['connected', 'declined']
+          && request.resource.data.updatedAt == request.time)
+        // A member offers or withdraws their own contact details.
+        || (resource.data.status == 'connected' && changedOnly(['reveal', 'updatedAt'])
+          && request.resource.data.reveal.diff(resource.data.reveal).affectedKeys().hasOnly([request.auth.uid])
+          && request.resource.data.reveal[request.auth.uid] is bool
+          && request.resource.data.updatedAt == request.time)
+        // A member blocks the other: the conversation closes.
+        || (changedOnly(['status', 'updatedAt']) && request.resource.data.status == 'blocked'
+          && request.resource.data.updatedAt == request.time)
+        // A new message bumps the time.
+        || (resource.data.status == 'connected' && changedOnly(['updatedAt']) && request.resource.data.updatedAt == request.time)
+      );
+      allow delete: if signedIn() && request.auth.uid in resource.data.members; // account deletion
+
+      // Contact details: your own always; the other person's only when BOTH revealed.
+      match /contact/{owner} {
+        allow read: if isUser(owner) || (isMember(cid)
+          && conn(cid).status == 'connected'
+          && conn(cid).reveal.get(conn(cid).members[0], false) == true
+          && conn(cid).reveal.get(conn(cid).members[1], false) == true);
+        allow create, update: if isUser(owner) && isMember(cid)
+          && onlyKeys(['text', 'at']) && str(request.resource.data.text, 1, 200)
+          && request.resource.data.at == request.time;
+        allow delete: if isUser(owner) || isMember(cid);
+      }
+    }
+
+    match /chats/{cid}/messages/{mid} {
+      allow read: if verified() && isMember(cid);
+      allow create: if verified() && isMember(cid)
+        && conn(cid).status == 'connected'
+        && onlyKeys(['from', 'text', 'at'])
+        && request.resource.data.from == request.auth.uid
+        && str(request.resource.data.text, 1, 1000) && safeText(request.resource.data.text)
+        && request.resource.data.at == request.time
+        && !blockedEitherWay(conn(cid).members[0], conn(cid).members[1])
+        && stamped('lastMessageAt');
+      allow update: if false;
+      allow delete: if isMember(cid); // account deletion
+    }
+
+    // ---------- reports and moderation ----------
+    match /reports/{id} {
+      allow create: if verified()
+        && onlyKeys(['reporter', 'targetType', 'target', 'reason', 'note', 'contextId', 'status', 'assignee', 'createdAt', 'slaHours'])
+        && request.resource.data.reporter == request.auth.uid
+        && request.resource.data.targetType in ['user', 'post', 'reply', 'event']
+        && str(request.resource.data.target, 1, 128)
+        && request.resource.data.reason in ['harassment', 'scam', 'impersonation', 'childSafety', 'hate', 'other']
+        && str(request.resource.data.note, 0, 1000)
+        && (request.resource.data.contextId == null || str(request.resource.data.contextId, 1, 128))
+        && request.resource.data.status == 'open'
+        && request.resource.data.assignee == null
+        && request.resource.data.createdAt == request.time
+        // Response window: 1 hour for child safety, 24 hours otherwise (due = createdAt + slaHours).
+        && request.resource.data.slaHours == (request.resource.data.reason == 'childSafety' ? 1 : 24)
+        && stamped('lastReportAt');
+      allow read: if isMod();
+      allow update: if isMod() && changedOnly(['status', 'assignee'])
+        && request.resource.data.status in ['open', 'inReview', 'actioned', 'dismissed'];
+      allow delete: if false;
+
+      match /audit/{aid} {
+        allow read: if isMod();
+        allow create: if isMod() && onlyKeys(['by', 'action', 'note', 'at'])
+          && request.resource.data.by == request.auth.uid && request.resource.data.at == request.time;
+        allow update, delete: if false;
+      }
+    }
+    match /translationReports/{id} {
+      allow create: if signedIn()
+        && onlyKeys(['uid', 'screen', 'note', 'lang', 'at'])
+        && request.resource.data.uid == request.auth.uid
+        && str(request.resource.data.screen, 1, 120)
+        && str(request.resource.data.note, 0, 1000)
+        && str(request.resource.data.lang, 2, 3)
+        && request.resource.data.at == request.time;
+      allow read, update: if isMod();
+      allow delete: if false;
+    }
+    match /roles/{uid} {
+      allow get: if isUser(uid); // so the app knows if you are a moderator
+      allow list, write: if false; // set by a person in the Firebase console
+    }
+    match /auditLog/{id} {
+      allow read: if isMod();
+      allow create: if isMod() && onlyKeys(['by', 'action', 'target', 'note', 'at'])
+        && request.resource.data.by == request.auth.uid && request.resource.data.at == request.time;
+      allow update, delete: if false;
+    }
+
+    // ---------- admin-managed content (seeded by a moderator through the app SDK) ----------
+    match /content/{type}/items/{id} {
+      allow read: if signedIn();
+      allow write: if isMod();
+    }
+
+    // ---------- event RSVPs (merge INSIDE `match /content/{type}/items/{id}` or as a sibling) ----------
+    // Each signed-in user may read and write only their own RSVP on an event.
+    match /content/events/items/{eventId}/rsvps/{uid} {
+      allow read: if isUser(uid) || isMod();
+      allow create, update: if isUser(uid)
+        && exists(/databases/$(database)/documents/content/events/items/$(eventId))
+        && onlyKeys(['status', 'at'])
+        && request.resource.data.status in ['going', 'maybe', 'notNow']
+        && request.resource.data.at == request.time;
+      allow delete: if isUser(uid);
+    }
+
+    // ---------- community forum (paste before "Everything else is closed.") ----------
+    // Uses only helpers defined above: signedIn, isUser, verified, isMod, onlyKeys,
+    // changedOnly, str, safeText, stamped. Anything not listed here stays denied.
+    function forumPost(pid) { return /databases/$(database)/documents/forumPosts/$(pid); }
+    function forumVote(pid, uid) { return /databases/$(database)/documents/forumPosts/$(pid)/votes/$(uid); }
+    function forumTopic(t) {
+      return t in ['housing', 'schoolsFamily', 'jobsWork', 'visasPaperwork', 'health', 'foodGroceries', 'transport', 'events', 'newcomers'];
+    }
+    // Sample content may only be written by moderators (scripts/seedSample.ts).
+    function sampleOk(d) { return d.isSample is bool && (d.isSample == false || isMod()); }
+
+    match /forumPosts/{pid} {
+      // Hidden posts are visible to moderators and their author only. Lists of
+      // other people's posts must filter hidden == false.
+      allow read: if signedIn()
+        && (resource.data.hidden == false || isMod() || resource.data.authorUid == request.auth.uid);
+      allow create: if verified()
+        && onlyKeys(['authorUid', 'displayName', 'topic', 'emirate', 'language', 'title', 'body',
+                     'createdAt', 'updatedAt', 'hidden', 'deleted', 'isSample', 'upvotes'])
+        && request.resource.data.authorUid == request.auth.uid
+        && str(request.resource.data.displayName, 1, 40)
+        && forumTopic(request.resource.data.topic)
+        && request.resource.data.emirate in ['abudhabi', 'dubai', 'sharjah', 'ajman', 'uaq', 'rak', 'fujairah']
+        && str(request.resource.data.language, 2, 3)
+        && str(request.resource.data.title, 5, 120) && safeText(request.resource.data.title)
+        && str(request.resource.data.body, 1, 4000) && safeText(request.resource.data.body)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.hidden == false
+        && request.resource.data.deleted == false
+        && request.resource.data.upvotes == 0
+        && sampleOk(request.resource.data)
+        // Moderators seeding sample content skip the 60 s stamp; everyone else needs it.
+        && (request.resource.data.isSample == true || stamped('lastPostAt'));
+      allow update: if signedIn() && (
+        // Author edits title/body within 15 minutes of posting.
+        (request.auth.uid == resource.data.authorUid && verified()
+          && resource.data.deleted == false
+          && request.time < resource.data.createdAt + duration.value(15, 'm')
+          && changedOnly(['title', 'body', 'updatedAt', 'editedAt'])
+          && str(request.resource.data.title, 5, 120) && safeText(request.resource.data.title)
+          && str(request.resource.data.body, 1, 4000) && safeText(request.resource.data.body)
+          && request.resource.data.updatedAt == request.time
+          && request.resource.data.editedAt == request.time)
+        // Author or moderator soft-deletes: a tombstone with empty title and body.
+        || ((request.auth.uid == resource.data.authorUid || isMod())
+          && changedOnly(['deleted', 'title', 'body', 'updatedAt'])
+          && request.resource.data.deleted == true
+          && request.resource.data.title == '' && request.resource.data.body == ''
+          && request.resource.data.updatedAt == request.time)
+        // Moderator hides or restores.
+        || (isMod() && changedOnly(['hidden', 'updatedAt'])
+          && request.resource.data.hidden is bool
+          && request.resource.data.updatedAt == request.time)
+        // Upvote: +1 only with my vote doc created in the same batch; -1 only with it removed.
+        || (verified() && changedOnly(['upvotes']) && (
+          (request.resource.data.upvotes == resource.data.upvotes + 1
+            && !exists(forumVote(pid, request.auth.uid)) && existsAfter(forumVote(pid, request.auth.uid)))
+          || (request.resource.data.upvotes == resource.data.upvotes - 1
+            && exists(forumVote(pid, request.auth.uid)) && !existsAfter(forumVote(pid, request.auth.uid)))))
+      );
+      // Hard delete only to remove sample content.
+      allow delete: if isMod() && resource.data.isSample == true;
+
+      match /replies/{rid} {
+        allow read: if signedIn();
+        allow create: if verified()
+          && onlyKeys(['authorUid', 'displayName', 'body', 'createdAt', 'deleted', 'isSample'])
+          && request.resource.data.authorUid == request.auth.uid
+          && str(request.resource.data.displayName, 1, 40)
+          && str(request.resource.data.body, 1, 2000) && safeText(request.resource.data.body)
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.deleted == false
+          && exists(forumPost(pid))
+          && get(forumPost(pid)).data.deleted == false
+          && sampleOk(request.resource.data)
+          && (request.resource.data.isSample == true || stamped('lastReplyAt'));
+        allow update: if signedIn()
+          && (request.auth.uid == resource.data.authorUid || isMod())
+          && changedOnly(['deleted', 'body'])
+          && request.resource.data.deleted == true && request.resource.data.body == '';
+        allow delete: if isMod() && resource.data.isSample == true;
+      }
+
+      match /votes/{uid} {
+        allow read: if isUser(uid) || isMod(); // moderators list votes to remove sample posts
+        // One vote per person: a second create is an update, which is denied.
+        allow create: if verified() && isUser(uid)
+          && onlyKeys(['at']) && request.resource.data.at == request.time
+          && getAfter(forumPost(pid)).data.upvotes == get(forumPost(pid)).data.upvotes + 1;
+        allow update: if false;
+        allow delete: if (isUser(uid)
+            && getAfter(forumPost(pid)).data.upvotes == get(forumPost(pid)).data.upvotes - 1)
+          // Removing sample content: a moderator clears votes on a sample post.
+          || (isMod() && get(forumPost(pid)).data.isSample == true);
+      }
+    }
+
+    // Saved posts: private to their owner.
+    match /users/{uid}/saves/{postId} {
+      allow read, delete: if isUser(uid);
+      allow create: if isUser(uid) && onlyKeys(['at']) && request.resource.data.at == request.time;
+      allow update: if false;
+    }
+
+    // ---------- community events (meetups hosted by guides) ----------
+    function isGuide() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)/private/profile)
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)/private/profile).data.role == 'volunteer';
+    }
+    function eventFieldsOk(d) {
+      return str(d.title, 5, 100) && safeText(d.title)
+        && str(d.body, 10, 2000) && safeText(d.body)
+        && str(d.place, 3, 160) && safeText(d.place)
+        && d.emirate in ['abudhabi', 'dubai', 'sharjah', 'ajman', 'uaq', 'rak', 'fujairah']
+        && d.language is string && d.language.size() <= 3
+        && d.startsAt is timestamp && d.endsAt is timestamp
+        && d.endsAt > d.startsAt && d.endsAt <= d.startsAt + duration.value(24, 'h')
+        && d.capacity is int && d.capacity >= 0 && d.capacity <= 500;
+    }
+    match /events/{eid} {
+      allow get: if verified()
+        && (resource.data.hidden == false || resource.data.hostUid == request.auth.uid || isMod());
+      allow list: if verified() && request.query.limit <= 100;
+      allow create: if verified() && (isGuide() || isMod())
+        && onlyKeys(['hostUid', 'hostName', 'title', 'body', 'place', 'emirate', 'language', 'startsAt', 'endsAt',
+                     'capacity', 'status', 'hidden', 'isSample', 'createdAt', 'updatedAt'])
+        && request.resource.data.hostUid == request.auth.uid
+        && request.resource.data.hostName == get(/databases/$(database)/documents/publicProfiles/$(request.auth.uid)).data.displayName
+        && eventFieldsOk(request.resource.data)
+        && request.resource.data.startsAt > request.time
+        && request.resource.data.status == 'scheduled'
+        && request.resource.data.hidden == false
+        && (request.resource.data.isSample == false || isMod())
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && (isMod() || stamped('lastEventAt'));
+      allow update: if verified() && (
+        // The host edits or cancels (never un-cancels, never moves the host).
+        (resource.data.hostUid == request.auth.uid
+          && changedOnly(['title', 'body', 'place', 'emirate', 'language', 'startsAt', 'endsAt', 'capacity', 'status', 'updatedAt'])
+          && eventFieldsOk(request.resource.data)
+          && request.resource.data.status in ['scheduled', 'cancelled']
+          && !(resource.data.status == 'cancelled' && request.resource.data.status == 'scheduled')
+          && request.resource.data.updatedAt == request.time)
+        // A moderator hides or restores it.
+        || (isMod() && changedOnly(['hidden', 'updatedAt']) && request.resource.data.hidden is bool
+          && request.resource.data.updatedAt == request.time)
+      );
+      allow delete: if signedIn() && (resource.data.hostUid == request.auth.uid || (isMod() && resource.data.isSample == true));
+
+      // RSVPs: your own; the host can see them (count only shown in the app). Nobody else lists them.
+      match /rsvps/{uid} {
+        allow get: if isUser(uid);
+        allow list: if signedIn() && get(/databases/$(database)/documents/events/$(eid)).data.hostUid == request.auth.uid;
+        allow create, update: if isUser(uid) && verified()
+          && get(/databases/$(database)/documents/events/$(eid)).data.status == 'scheduled'
+          && onlyKeys(['status', 'at'])
+          && request.resource.data.status in ['going', 'maybe', 'notNow']
+          && request.resource.data.at == request.time;
+        allow delete: if isUser(uid) || (signedIn() && get(/databases/$(database)/documents/events/$(eid)).data.hostUid == request.auth.uid);
+      }
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
