@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  ActivityIndicator, Animated, Modal, Pressable, ScrollView, StyleSheet, Switch,
+  ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Switch,
   Text, TextInput, View, type StyleProp, type TextInputProps, type TextStyle, type ViewStyle,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +8,20 @@ import { useTranslation } from 'react-i18next';
 import { colors, radius, shadow, space, touch, type as typeScale } from '../../theme';
 import { fontFor, type Weight } from '../lib/fonts';
 import { useLang } from '../lib/lang';
+import Animated from 'react-native-reanimated';
 import { Button as GSButton } from './gs/button';
+import {
+  CHECK_ENTER, SHEET_ENTER, motion, TOAST_ENTER, TOAST_EXIT, haptic, pressTransition, pressedScale, restScale, stateTransition,
+} from '../lib/motion';
+
+export { CHECK_ENTER, haptic };
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+/** Tracks whether a finger is down, for press feedback (two state changes per tap, never per frame). */
+export function usePressed() {
+  const [pressed, setPressed] = React.useState(false);
+  return { pressed, onPressIn: () => setPressed(true), onPressOut: () => setPressed(false) };
+}
 import { Badge as GSBadge } from './gs/badge';
 
 type Variant = keyof typeof typeScale;
@@ -52,20 +65,26 @@ export function Button({
   const { isRTL } = useLang();
   const flip = isRTL && !!icon && /arrow-(forward|back)|chevron|send/.test(icon);
   const c = disabled ? colors.disabled : fg;
+  const { pressed, onPressIn, onPressOut } = usePressed();
   return (
+    <Animated.View style={[pressTransition, pressed && !disabled ? pressedScale : restScale, style]}>
     <GSButton
       variant={variant}
       onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      pressRetentionOffset={16}
       isDisabled={disabled}
       accessibilityRole="button"
       accessibilityLabel={a11y ?? label}
       accessibilityState={{ disabled: !!disabled }}
       className={`${small ? 'px-3 py-1.5' : 'px-4 py-2.5'} ${kind === 'outlineLight' ? 'bg-transparent border-white/70' : ''} ${disabled ? 'opacity-100 bg-secondary border border-border' : ''} ${textColor && kind === 'ghost' ? 'data-[hover=true]:bg-white/10 data-[active=true]:bg-white/10' : ''}`}
-      style={[{ minHeight: small ? 36 : touch }, style]}
+      style={{ minHeight: small ? 36 : touch }}
     >
       {icon ? <Ionicons name={icon} size={small ? 15 : 17} color={c} style={flip ? { transform: [{ scaleX: -1 }] } : undefined} /> : null}
       <T v={small ? 'small' : 'body'} w="semibold" color={c} center style={{ flexShrink: 1 }}>{label}</T>
     </GSButton>
+    </Animated.View>
   );
 }
 
@@ -73,20 +92,24 @@ export function Chip({
   label, selected, onPress, disabled, icon,
 }: { label: string; selected?: boolean; onPress?: () => void; disabled?: boolean; icon?: keyof typeof Ionicons.glyphMap }) {
   const { t } = useTranslation();
+  const { pressed, onPressIn, onPressOut } = usePressed();
   return (
-    <Pressable
+    <AnimatedPressable
       onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      pressRetentionOffset={16}
       disabled={disabled || !onPress}
       accessibilityRole={onPress ? 'checkbox' : 'text'}
       accessibilityState={{ checked: !!selected, disabled: !!disabled }}
       aria-checked={!!selected}
       aria-disabled={!!disabled || undefined}
       accessibilityLabel={`${label}, ${selected ? t('common.selected') : t('common.notSelected')}`}
-      style={[styles.chip, selected && styles.chipOn, disabled && { opacity: 0.5 }]}
+      style={[styles.chip, stateTransition, selected && styles.chipOn, disabled && { opacity: 0.5 }, pressed ? pressedScale : restScale]}
     >
       {selected ? <Ionicons name="checkmark" size={16} color={colors.textOnDark} /> : icon ? <Ionicons name={icon} size={16} color={colors.textMuted} /> : null}
       <T v="small" w="semibold" color={selected ? colors.textOnDark : colors.text}>{label}</T>
-    </Pressable>
+    </AnimatedPressable>
   );
 }
 
@@ -106,19 +129,24 @@ export function Tag({ label, tone = 'muted' }: { label: string; tone?: 'muted' |
 }
 
 export function Card({ children, style, onPress, a11y }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; onPress?: () => void; a11y?: string }) {
+  const { pressed, onPressIn, onPressOut } = usePressed();
   if (onPress) {
     return (
-      <Pressable
+      <AnimatedPressable
         onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        pressRetentionOffset={16}
         accessibilityRole="button"
         accessibilityLabel={a11y}
-        style={({ pressed }) => [styles.card, style, pressed && { opacity: 0.92, transform: [{ scale: 0.985 }] }]}
+        style={[styles.card, stateTransition, style, pressed ? styles.cardPressed : restScale]}
       >
         {children}
-      </Pressable>
+      </AnimatedPressable>
     );
   }
-  return <View style={[styles.card, style]}>{children}</View>;
+  // Colour changes (a checklist step turning done) ease instead of snapping.
+  return <Animated.View style={[styles.card, stateTransition, style]}>{children}</Animated.View>;
 }
 
 export function Row({ children, gap = space.sm, style, wrap }: { children: React.ReactNode; gap?: number; style?: StyleProp<ViewStyle>; wrap?: boolean }) {
@@ -126,13 +154,11 @@ export function Row({ children, gap = space.sm, style, wrap }: { children: React
 }
 
 export function Progress({ value, label }: { value: number; label: string }) {
-  const anim = useRef(new Animated.Value(value)).current;
-  useEffect(() => {
-    Animated.timing(anim, { toValue: value, duration: 300, useNativeDriver: false }).start();
-  }, [value, anim]);
+  const pct = Math.max(0, Math.min(1, value)) * 100;
   return (
-    <View accessibilityRole="progressbar" accessibilityLabel={label} accessibilityValue={{ min: 0, max: 100, now: Math.round(value * 100) }} style={styles.track}>
-      <Animated.View style={[styles.fill, { width: anim.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) }]} />
+    <View accessibilityRole="progressbar" accessibilityLabel={label} accessibilityValue={{ min: 0, max: 100, now: Math.round(pct) }} style={styles.track}>
+      {/* The fill is childless, so animating its width re-lays-out nothing else and keeps its rounded end. */}
+      <Animated.View style={[styles.fill, motion.width, { width: `${pct}%` }]} />
     </View>
   );
 }
@@ -224,9 +250,10 @@ export function Field({ label, hint, ...props }: TextInputProps & { label: strin
 export function Sheet({ visible, onClose, title, children }: { visible: boolean; onClose: () => void; title: string; children: React.ReactNode }) {
   const { t } = useTranslation();
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+      {/* The scrim fades in place; only the sheet travels up. */}
       <Pressable style={styles.scrim} onPress={onClose} accessibilityLabel={t('common.close')} accessibilityRole="button" />
-      <View style={styles.sheet}>
+      <Animated.View entering={SHEET_ENTER} style={styles.sheet}>
         <Row style={{ justifyContent: 'space-between', marginBottom: space.md }}>
           <T v="h2" w="bold" style={{ flex: 1 }} accessibilityRole="header">{title}</T>
           <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel={t('common.close')} style={styles.iconBtn}>
@@ -234,26 +261,24 @@ export function Sheet({ visible, onClose, title, children }: { visible: boolean;
           </Pressable>
         </Row>
         <ScrollView keyboardShouldPersistTaps="handled">{children}</ScrollView>
-      </View>
+      </Animated.View>
     </Modal>
   );
 }
 
 export function IconButton({ icon, label, onPress, color = colors.text }: { icon: keyof typeof Ionicons.glyphMap; label: string; onPress: () => void; color?: string }) {
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={styles.iconBtn} hitSlop={4}>
-      <Ionicons name={icon} size={22} color={color} />
-    </Pressable>
+    <IconPress onPress={onPress} label={label}><Ionicons name={icon} size={22} color={color} /></IconPress>
   );
 }
 
 export function Toast({ text }: { text: string | null }) {
   if (!text) return null;
   return (
-    <View style={styles.toast} accessibilityLiveRegion="polite" pointerEvents="none">
+    <Animated.View key={text} entering={TOAST_ENTER} exiting={TOAST_EXIT} style={styles.toast} accessibilityLiveRegion="polite" pointerEvents="none">
       <Ionicons name="checkmark-circle" size={18} color={colors.accent} />
       <T v="small" color={colors.textOnDark} style={{ flexShrink: 1 }}>{text}</T>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -285,6 +310,7 @@ export const styles = StyleSheet.create({
   chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
   tag: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: radius.sm, alignSelf: 'flex-start' },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, padding: space.md, gap: space.sm, borderWidth: 1, borderColor: colors.border, ...shadow },
+  cardPressed: { transform: [{ scale: 0.985 }] },
   track: { height: 8, borderRadius: 4, backgroundColor: colors.surfaceAlt, overflow: 'hidden' },
   fill: { height: 8, borderRadius: 4, backgroundColor: colors.accent },
   empty: { alignItems: 'center', gap: space.md, padding: space.xl },
@@ -316,5 +342,22 @@ export function DateBadge({ date, lang }: { date: Date; lang: string }) {
       <T v="h2" w="bold" center>{date.getDate()}</T>
       <T v="tiny" color={colors.textMuted} center>{date.toLocaleDateString(lang, { weekday: 'short' })}</T>
     </View>
+  );
+}
+
+function IconPress({ onPress, label, children }: { onPress: () => void; label: string; children: React.ReactNode }) {
+  const { pressed, onPressIn, onPressOut } = usePressed();
+  return (
+    <AnimatedPressable
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      hitSlop={4}
+      style={[styles.iconBtn, pressTransition, pressed ? { transform: [{ scale: 0.9 }] } : restScale]}
+    >
+      {children}
+    </AnimatedPressable>
   );
 }

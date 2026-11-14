@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
@@ -7,7 +7,9 @@ import { colors, radius, space, touch } from '../../../theme';
 import { checklistFor } from '../../../data/checklist';
 import { useApps } from '../../lib/content';
 import { useProgress } from '../../lib/progress';
-import { Button, Card, Progress, Row, T, Tag } from '../../components/ui';
+import Animated from 'react-native-reanimated';
+import { Button, CHECK_ENTER, Card, Progress, Row, T, Tag, haptic, usePressed } from '../../components/ui';
+import { motion } from '../../lib/motion';
 import { Screen } from '../../components/layout';
 import { useStore } from '../../store/AppStore';
 import { VerifyBanner } from '../../components/VerifyBanner';
@@ -22,7 +24,13 @@ export default function Home() {
   const done = items.filter((i) => state.checklist[i.id]).length;
   const personaLabel = me.role === 'volunteer' ? t('persona.volunteer') : t(`persona.${me.persona}`);
 
-  const { toggleChecklist: toggle } = useProgress();
+  const { toggleChecklist } = useProgress();
+  // Haptic on the same frame as the tick; a stronger one when the last step lands.
+  const toggle = (id: string) => {
+    const nowDone = !state.checklist[id];
+    if (nowDone) (done + 1 === items.length ? haptic.done : haptic.tick)();
+    toggleChecklist(id);
+  };
 
   return (
     <Screen>
@@ -46,16 +54,12 @@ export default function Home() {
           return (
             <Card key={it.id} style={on && { backgroundColor: colors.accentSoft, borderColor: colors.accent }}>
               <Row gap={space.md} style={{ alignItems: 'flex-start' }}>
-                <Pressable
+                <CheckCircle
+                  on={on}
+                  n={idx + 1}
                   onPress={() => toggle(it.id)}
-                  accessibilityRole="checkbox"
-                  accessibilityState={{ checked: on }}
-                  aria-checked={on}
-                  accessibilityLabel={`${t(`check.${it.id}`)}. ${on ? t('home.markUndone') : t('home.markDone')}`}
-                  style={[styles.check, on && styles.checkOn]}
-                >
-                  {on ? <Ionicons name="checkmark" size={22} color={colors.textOnDark} /> : <T v="small" w="bold" color={colors.textMuted} lang="en">{idx + 1}</T>}
-                </Pressable>
+                  label={`${t(`check.${it.id}`)}. ${on ? t('home.markUndone') : t('home.markDone')}`}
+                />
                 <View style={{ flex: 1, gap: space.xs }}>
                   <Row gap={space.xs}>
                     <Ionicons name={it.icon as keyof typeof Ionicons.glyphMap} size={18} color={colors.primary} />
@@ -90,6 +94,33 @@ export default function Home() {
       <Button label={t('home.forum')} onPress={() => router.push('/forum')} icon="chatbox-ellipses-outline" kind="secondary" />
       <Button label={t('events.meetups')} onPress={() => router.push('/events')} icon="calendar-outline" kind="secondary" />
     </Screen>
+  );
+}
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+/** The checklist tick: fill eases to clay, the checkmark pops from 60%, a light press shrink. */
+function CheckCircle({ on, n, onPress, label }: { on: boolean; n: number; onPress: () => void; label: string }) {
+  const { pressed, onPressIn, onPressOut } = usePressed();
+  // Steps already done when the screen opens just show their tick; only a new tick pops.
+  const mounted = useRef(false);
+  useEffect(() => { mounted.current = true; }, []);
+  return (
+    <AnimatedPressable
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      pressRetentionOffset={16}
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: on }}
+      aria-checked={on}
+      accessibilityLabel={label}
+      style={[styles.check, motion.state, on && styles.checkOn, { transform: [{ scale: pressed ? 0.9 : 1 }] }]}
+    >
+      {on ? (
+        <Animated.View entering={mounted.current ? CHECK_ENTER : undefined}><Ionicons name="checkmark" size={22} color={colors.textOnDark} /></Animated.View>
+      ) : <T v="small" w="bold" color={colors.textMuted} lang="en">{n}</T>}
+    </AnimatedPressable>
   );
 }
 

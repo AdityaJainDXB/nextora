@@ -5,7 +5,12 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { colors, radius, space, touch } from '../../theme';
 import { getLang } from '../../locales/meta';
+import Animated from 'react-native-reanimated';
 import { HeroIllustration } from '../components/Illustration';
+import { riseIn } from '../lib/motion';
+
+// First-run only: copy, actions and the trust note rise in after the sun, 60ms apart.
+const RISE = [riseIn(0), riseIn(1), riseIn(2), riseIn(3)];
 import { Button, Row, Sheet, T } from '../components/ui';
 import { Screen } from '../components/layout';
 import { useLang } from '../lib/lang';
@@ -42,13 +47,13 @@ export default function Welcome() {
 
       <HeroIllustration />
 
-      <View style={{ gap: space.sm }}>
+      <Animated.View entering={RISE[0]} style={{ gap: space.sm }}>
         <T v="display" w="bold" color={colors.textOnDark} accessibilityRole="header">{t('hero.headline')}</T>
         <T color={colors.textOnDarkMuted}>{t('hero.value')}</T>
         <T v="small" w="semibold" color={colors.accentOnDark}>{t('hero.tagline')}</T>
-      </View>
+      </Animated.View>
 
-      <View style={{ gap: space.sm }}>
+      <Animated.View entering={RISE[1]} style={{ gap: space.sm }}>
         <Button label={t('hero.new')} onPress={() => setOpen(true)} icon="arrow-forward" kind="light" />
         <Button
           label={t('hero.help')}
@@ -59,8 +64,9 @@ export default function Welcome() {
           icon="hand-left-outline"
           kind="outlineLight"
         />
-      </View>
+      </Animated.View>
 
+      <Animated.View entering={RISE[2]} style={{ alignSelf: 'center' }}>
       <Button
         label={t('auth.haveAccount')}
         kind="ghost"
@@ -68,11 +74,14 @@ export default function Welcome() {
         style={{ alignSelf: 'center' }}
         textColor={colors.accentOnDark}
       />
+      </Animated.View>
 
+      <Animated.View entering={RISE[3]}>
       <Row style={styles.trust} gap={space.sm}>
         <Ionicons name="shield-checkmark-outline" size={22} color={colors.accentOnDark} />
         <T v="small" color={colors.textOnDark} style={{ flex: 1 }}>{t('hero.trust')}</T>
       </Row>
+      </Animated.View>
 
       <Sheet visible={open} onClose={() => setOpen(false)} title={t('persona.title')}>
         <View style={{ gap: space.sm }}>

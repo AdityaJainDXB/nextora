@@ -3,6 +3,7 @@ import '../lib/i18n';
 import { GluestackUIProvider } from '../components/gs/gluestack-ui-provider';
 import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
+import { useReducedMotion } from 'react-native-reanimated';
 import { StatusBar } from 'expo-status-bar';
 import * as Font from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -35,6 +36,7 @@ function RestartPrompt() {
 }
 
 function Gate() {
+  const reducedMotion = useReducedMotion();
   const { state, ready, loadError, retryLoad } = useStore();
   // Load fonts only for the active language (plus Latin for official names).
   const lang = state.language ?? deviceLanguage();
@@ -59,7 +61,8 @@ function Gate() {
       <ContentProvider>
       <ProgressSync />
       <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg }, animation: 'fade' }} />
+      {/* Platform push for going deeper (keeps the iOS back swipe); a fade when Reduce Motion is on. */}
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg }, animation: reducedMotion ? 'fade' : 'default' }} />
       <BackendStatus />
       <RestartPrompt />
       </ContentProvider>
