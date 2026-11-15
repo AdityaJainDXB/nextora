@@ -1,0 +1,16 @@
+import { chromium } from 'playwright';
+const B = 'http://localhost:8082';
+const b = await chromium.launch({ executablePath: process.env.HOME + '/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell' });
+const errs = [];
+const p = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 }); p.on('pageerror', (e) => errs.push(e.message.slice(0, 100)));
+const go = async (r) => { await p.goto(B + r); await p.waitForTimeout(3500); };
+await go('/language'); await p.getByText('English', { exact: true }).first().click(); const c = p.getByRole('button', { name: /Continue/ }); if (await c.count()) await c.first().click(); await p.waitForTimeout(2000);
+await go('/auth'); await p.getByText('Sign in', { exact: true }).first().click(); await p.waitForTimeout(600);
+await p.locator('input').first().fill('demo@nextora.app'); await p.locator('input[type=password]').first().fill(process.env.DEMO_PW);
+await p.getByRole('button', { name: 'Sign in', exact: true }).last().click(); await p.waitForTimeout(7000);
+await go('/home'); await p.screenshot({ path: 'shots/icons-home.png' });
+await p.evaluate(() => window.scrollTo(0, 0)); await p.mouse.wheel(0, 700); await p.waitForTimeout(800); await p.screenshot({ path: 'shots/icons-home2.png' });
+await go('/matches'); await p.screenshot({ path: 'shots/icons-matches.png' });
+const imgs = await p.evaluate(() => [...document.querySelectorAll('.nv-ico img')].map((i) => i.naturalWidth + 'x' + i.naturalHeight));
+console.log('tab pictures', imgs.join(' '), 'page errors', errs);
+await b.close();

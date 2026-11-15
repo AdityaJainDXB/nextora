@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { NIcon } from '../../components/icons/NIcon';
+import type { IconName } from '../../components/icons/registry';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { colors, radius, space, touch } from '../../../theme';
@@ -62,7 +64,7 @@ export default function Home() {
                 />
                 <View style={{ flex: 1, gap: space.xs }}>
                   <Row gap={space.xs}>
-                    <Ionicons name={it.icon as keyof typeof Ionicons.glyphMap} size={18} color={colors.primary} />
+                    <NIcon name={it.art as IconName} tone={on ? 'ink' : 'clay'} size={22} />
                     <T w="semibold" style={[{ flex: 1 }, on && { textDecorationLine: 'line-through', color: colors.textMuted }]}>{t(`check.${it.id}`)}</T>
                   </Row>
                   <T v="small" color={colors.textMuted}>{t(`check.${it.id}Desc`)}</T>
@@ -89,10 +91,10 @@ export default function Home() {
           );
         })}
       </View>
-      <Button label={t('home.matchesCta')} onPress={() => router.push('/matches')} icon="people-outline" kind="secondary" />
-      <Button label={t('home.guides')} onPress={() => router.push('/guides')} icon="map-outline" kind="secondary" />
-      <Button label={t('home.forum')} onPress={() => router.push('/forum')} icon="chatbox-ellipses-outline" kind="secondary" />
-      <Button label={t('events.meetups')} onPress={() => router.push('/events')} icon="calendar-outline" kind="secondary" />
+      <Button label={t('home.matchesCta')} onPress={() => router.push('/matches')} icon="people-outline" art="users" kind="secondary" />
+      <Button label={t('home.guides')} onPress={() => router.push('/guides')} icon="map-outline" art="book-open" kind="secondary" />
+      <Button label={t('home.forum')} onPress={() => router.push('/forum')} icon="chatbox-ellipses-outline" art="messages-square" kind="secondary" />
+      <Button label={t('events.meetups')} onPress={() => router.push('/events')} icon="calendar-outline" art="calendar" kind="secondary" />
     </Screen>
   );
 }
