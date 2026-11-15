@@ -1,0 +1,70 @@
+# Vercel is the main site; GitHub Pages is the copy that always deploys (so collaborators'
+# pushes go live). Both build the same commit of `main`. This check confirms Vercel has
+# deployed the latest commit, after every Pages deploy and every 6 hours.
+#
+# If Vercel is behind and the optional secret VERCEL_DEPLOY_HOOK is set, it asks Vercel to
+# rebuild; otherwise the run fails so GitHub emails you. Set the secret in your terminal:
+#   gh secret set VERCEL_DEPLOY_HOOK
+name: Check Vercel matches main
+
+on:
+  workflow_run:
+    workflows: ["Deploy web to GitHub Pages"]
+    types: [completed]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  check:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Vercel to deploy the latest main commit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          set -uo pipefail
+          sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" -q .sha)
+          echo "Latest main commit: $sha"
+
+          # State of Vercel's newest production deployment for this commit.
+          vercel_state() {
+            id=$(gh api "repos/$GITHUB_REPOSITORY/deployments?sha=$sha&environment=Production" \
+              -q '[.[] | select(.creator.login=="vercel[bot]")][0].id // empty')
+            [ -z "$id" ] && { echo none; return; }
+            gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses" -q '.[0].state // "none"'
+          }
+
+          # Vercel usually needs 2-4 minutes, so give it up to 12 before calling it behind.
+          wait_for_vercel() {
+            for i in $(seq 1 24); do
+              state=$(vercel_state)
+              echo "Vercel state: $state"
+              case "$state" in
+                success) return 0 ;;
+                failure|error) return 1 ;;
+              esac
+              sleep 30
+            done
+            return 1
+          }
+
+          if wait_for_vercel; then
+            echo "Vercel and GitHub Pages are both on $sha."
+            exit 0
+          fi
+
+          if [ -n "${HOOK:-}" ]; then
+            echo "Vercel is behind. Asking Vercel to rebuild main."
+            curl -fsS -X POST "$HOOK" > /dev/null
+            if wait_for_vercel; then echo "Vercel caught up to $sha."; exit 0; fi
+          fi
+
+          echo "::error::Vercel has not deployed $sha. Check the Deployments tab in Vercel (for a private repo, commits from other people are blocked on the free Hobby plan)."
+          exit 1
