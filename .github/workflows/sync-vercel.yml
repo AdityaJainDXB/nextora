@@ -17,7 +17,6 @@ on:
 
 permissions:
   contents: read
-  deployments: read
 
 jobs:
   check:
@@ -33,13 +32,13 @@ jobs:
           sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" -q .sha)
           echo "Latest main commit: $sha"
 
-          # State of Vercel's newest production deployment for this commit.
-          vercel_state() {
-            id=$(gh api "repos/$GITHUB_REPOSITORY/deployments?sha=$sha&environment=Production" \
-              -q '[.[] | select(.creator.login=="vercel[bot]")][0].id // empty')
-            [ -z "$id" ] && { echo none; return; }
-            gh api "repos/$GITHUB_REPOSITORY/deployments/$id/statuses" -q '.[0].state // "none"'
+          # The commit the Vercel site is really serving (stamped into the page by scripts/buildWeb.mjs).
+          # A finished build does not count: Vercel can leave a build staged, not live.
+          live_sha() {
+            curl -fsS "https://nextora-psi.vercel.app/?nocache=$(date +%s)" 2>/dev/null \
+              | grep -o 'name="nextora-build" content="[0-9a-f]*"' | grep -o '[0-9a-f]\{7,40\}' | head -1
           }
+          vercel_state() { [ "$(live_sha)" = "$sha" ] && echo success || echo "behind ($(live_sha || true))"; }
 
           # Vercel usually needs 2-4 minutes, so give it up to 12 before calling it behind.
           wait_for_vercel() {
@@ -66,5 +65,5 @@ jobs:
             if wait_for_vercel; then echo "Vercel caught up to $sha."; exit 0; fi
           fi
 
-          echo "::error::Vercel has not deployed $sha. Check the Deployments tab in Vercel (for a private repo, commits from other people are blocked on the free Hobby plan)."
+          echo "::error::The Vercel site is not serving $sha. In Vercel, open the Deployments tab: a finished build may be staged and need promoting, or auto-assign domains may be off."
           exit 1
