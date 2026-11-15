@@ -4,6 +4,8 @@
 
 > **Pitch build, not yet submitted to stores.** Runs in **Expo Go** on free plans only: Firebase Spark (Auth + Firestore) and a Cloudflare Worker for Gemini.
 
+**Live site:** https://adityajaindxb.github.io/nextora/ (GitHub Pages, deploys on every push to `main`). Backup copy on Vercel: https://nextora-psi.vercel.app
+
 ## Run it on your phone
 
 ```bash

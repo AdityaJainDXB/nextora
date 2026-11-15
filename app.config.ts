@@ -60,6 +60,8 @@ const config: ExpoConfig = {
   },
   web: { favicon: './assets/favicon.png', bundler: 'metro', output: 'single' },
   plugins: ['expo-router', 'expo-localization', 'expo-font'],
+  // Set only for the GitHub Pages build, which is served from /nextora/ rather than the domain root.
+  experiments: process.env.WEB_BASE_URL ? { baseUrl: process.env.WEB_BASE_URL } : undefined,
   extra: {
     appEnv: APP_ENV,
     supportsRTL: true,
