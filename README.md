@@ -6,6 +6,8 @@
 
 **Live site:** https://nextora-psi.vercel.app (Vercel, the main site). **Mirror:** https://adityajaindxb.github.io/nextora/ (GitHub Pages). Every push to `main` deploys to both, and a workflow checks that Vercel has the same commit as Pages.
 
+> Vercel's project setting **Auto-assign custom domains** must stay on. If it is off, builds finish "staged" and the main address keeps an old version; the *Check Vercel matches main* workflow then fails.
+
 ## Run it on your phone
 
 ```bash
