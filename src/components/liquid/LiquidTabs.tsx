@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-nativ
 import Animated, { useAnimatedStyle, useReducedMotion, useSharedValue, withTiming } from 'react-native-reanimated';
 import { DUR, EASE_IN_OUT } from '../../lib/motion';
 import { Ionicons } from '@expo/vector-icons';
+import { NIcon } from '../icons/NIcon';
 import { colors, radius, touch } from '../../../theme';
 import { T } from '../ui';
 import type { LiquidTabsProps } from './types';
@@ -60,7 +61,7 @@ export function LiquidTabs({ items, value, onChange, tone = 'light', compact, ar
             accessibilityLabel={it.label}
             style={styles.item}
           >
-            {it.icon ? <Ionicons name={it.icon} size={20} color={fg} /> : null}
+            {it.art ? <NIcon name={it.art} tone={on && !dark ? 'clay' : 'ink'} size={22} /> : it.icon ? <Ionicons name={it.icon} size={20} color={fg} /> : null}
             {/* With many tabs only the active one shows its label, so nothing is cut off. */}
             {!compact && (on || items.length <= 3) ? <T v="tiny" w="semibold" color={fg} center>{it.label}</T> : null}
           </Pressable>

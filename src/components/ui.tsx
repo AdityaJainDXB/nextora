@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { colors, radius, shadow, space, touch, type as typeScale } from '../../theme';
 import { fontFor, type Weight } from '../lib/fonts';
 import { useLang } from '../lib/lang';
+import { NIcon } from './icons/NIcon';
+import type { IconName } from './icons/registry';
 import Animated from 'react-native-reanimated';
 import { Button as GSButton } from './gs/button';
 import {
@@ -51,10 +53,10 @@ export function T({
 }
 
 export function Button({
-  label, onPress, kind = 'primary', icon, disabled, a11y, small, style, textColor,
+  label, onPress, kind = 'primary', icon, art, disabled, a11y, small, style, textColor,
 }: {
   label: string; onPress: () => void; kind?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'light' | 'outlineLight';
-  icon?: keyof typeof Ionicons.glyphMap; disabled?: boolean; a11y?: string; small?: boolean; style?: StyleProp<ViewStyle>;
+  icon?: keyof typeof Ionicons.glyphMap; /** Picture icon for light buttons (secondary, ghost); wins over `icon`. */ art?: IconName; disabled?: boolean; a11y?: string; small?: boolean; style?: StyleProp<ViewStyle>;
   textColor?: string;
 }) {
   // Built on gluestack-ui's Button; NEXTORA tokens live in gs/gluestack-ui-provider/config.ts.
@@ -81,7 +83,7 @@ export function Button({
       className={`${small ? 'px-3 py-1.5' : 'px-4 py-2.5'} ${kind === 'outlineLight' ? 'bg-transparent border-white/70' : ''} ${disabled ? 'opacity-100 bg-secondary border border-border' : ''} ${textColor && kind === 'ghost' ? 'data-[hover=true]:bg-white/10 data-[active=true]:bg-white/10' : ''}`}
       style={{ minHeight: small ? 36 : touch }}
     >
-      {icon ? <Ionicons name={icon} size={small ? 15 : 17} color={c} style={flip ? { transform: [{ scaleX: -1 }] } : undefined} /> : null}
+      {art && !disabled ? <NIcon name={art} size={small ? 18 : 20} /> : icon ? <Ionicons name={icon} size={small ? 15 : 17} color={c} style={flip ? { transform: [{ scaleX: -1 }] } : undefined} /> : null}
       <T v={small ? 'small' : 'body'} w="semibold" color={c} center style={{ flexShrink: 1 }}>{label}</T>
     </GSButton>
     </Animated.View>
