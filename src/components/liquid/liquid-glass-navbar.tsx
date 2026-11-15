@@ -118,7 +118,9 @@ const NIMBUS_CSS = `
 @keyframes nvWave{0%{transform:none}20%{transform:rotate(-15deg)}40%{transform:rotate(12deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(4deg)}100%{transform:translateY(-1px) scale(1.08)}}
 .nimbus-nav[data-compact="true"] .nimbus-item{padding:0 13px}
 .nimbus-nav[data-compact="true"] .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media (max-width:520px){.nimbus-nav:not([data-compact="false"]) .nimbus-item{padding:0 13px}.nimbus-nav:not([data-compact="false"]) .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media (max-width:520px){.nimbus-nav:not([data-compact]){display:flex;width:100%;box-sizing:border-box;gap:0;padding:4px}
+.nimbus-nav:not([data-compact]) .nimbus-item{flex:1 1 0;min-width:0;flex-direction:column;justify-content:center;gap:3px;height:52px;padding:0 1px}
+.nimbus-nav:not([data-compact]) .nimbus-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:14px;letter-spacing:0}}
 @media (prefers-reduced-motion:reduce){.nv-ico svg,.nv-ico::before,.nv-ico::after,.nv-door{animation:none!important;transition:none}}
 `
 

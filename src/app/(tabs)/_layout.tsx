@@ -14,7 +14,7 @@ import { appEnv } from '../../lib/firebase';
 const TABS: { name: string; icon: keyof typeof Ionicons.glyphMap }[] = [
   { name: 'home', icon: 'checkbox-outline' },
   { name: 'appverse', icon: 'apps-outline' },
-  { name: 'ask', icon: 'chatbubble-ellipses-outline' },
+  { name: 'ask', icon: 'sparkles-outline' },
   { name: 'matches', icon: 'people-outline' },
   { name: 'chats', icon: 'chatbubbles-outline' },
   { name: 'me', icon: 'person-circle-outline' },

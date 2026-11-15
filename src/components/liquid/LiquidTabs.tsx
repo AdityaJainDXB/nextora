@@ -61,8 +61,8 @@ export function LiquidTabs({ items, value, onChange, tone = 'light', compact, ar
             style={styles.item}
           >
             {it.icon ? <Ionicons name={it.icon} size={20} color={fg} /> : null}
-            {/* With many tabs only the active one shows its label, so nothing is cut off. */}
-            {!compact && (on || items.length <= 3) ? <T v="tiny" w="semibold" color={fg} center>{it.label}</T> : null}
+            {/* Every tab keeps its label: icons alone are guesswork for a newcomer. */}
+            {!compact ? <T v="tiny" w={on ? 'semibold' : 'regular'} color={fg} center numberOfLines={1} style={styles.label}>{it.label}</T> : null}
           </Pressable>
         );
       })}
@@ -71,12 +71,13 @@ export function LiquidTabs({ items, value, onChange, tone = 'light', compact, ar
 }
 
 const styles = StyleSheet.create({
-  pill: { flexDirection: 'row', padding: 6, borderRadius: radius.pill, gap: 2, alignSelf: 'stretch' },
+  pill: { flexDirection: 'row', padding: 4, borderRadius: radius.pill, alignSelf: 'stretch' },
   pillLight: { backgroundColor: 'rgba(255,255,255,0.9)', borderWidth: 1, borderColor: colors.border },
   pillDark: { backgroundColor: colors.glassOnDark, borderWidth: 1, borderColor: 'rgba(255,255,255,0.25)' },
   drop: {
-    position: 'absolute', top: 6, bottom: 6, left: 0, borderRadius: radius.pill, backgroundColor: colors.surfaceAlt,
+    position: 'absolute', top: 4, bottom: 4, left: 0, borderRadius: radius.pill, backgroundColor: colors.surfaceAlt,
     borderWidth: 1, borderColor: colors.border,
   },
-  item: { flexGrow: 1, flexBasis: 0, minWidth: touch, minHeight: touch + 8, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 6, borderRadius: radius.pill, gap: 2 },
+  item: { flexGrow: 1, flexBasis: 0, minWidth: touch, minHeight: touch + 8, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 1, borderRadius: radius.pill, gap: 2 },
+  label: { fontSize: 11, lineHeight: 14, maxWidth: '100%' },
 });
