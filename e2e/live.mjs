@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-const B = process.env.LIVE_URL || 'https://adityajaindxb.github.io/nextora'; const out = [];
+const B = process.env.LIVE_URL || 'https://nextora-psi.vercel.app'; const out = [];
 const b = await chromium.launch({ executablePath: process.env.HOME + '/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell' });
 const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = [], bad = [];
 p.on('pageerror', (e) => errs.push(e.message.slice(0, 120))); p.on('response', (r) => { if (r.status() >= 400 && !r.url().includes('workers.dev')) bad.push(r.status() + ' ' + r.url().slice(0, 80)); });

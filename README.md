@@ -4,7 +4,7 @@
 
 > **Pitch build, not yet submitted to stores.** Runs in **Expo Go** on free plans only: Firebase Spark (Auth + Firestore) and a Cloudflare Worker for Gemini.
 
-**Live site:** https://adityajaindxb.github.io/nextora/ (GitHub Pages). Every push to `main` builds and deploys it (`.github/workflows/pages.yml`).
+**Live site:** https://nextora-psi.vercel.app (Vercel, the main site). **Mirror:** https://adityajaindxb.github.io/nextora/ (GitHub Pages). Every push to `main` deploys to both, and a workflow checks that Vercel has the same commit as Pages.
 
 ## Run it on your phone
 

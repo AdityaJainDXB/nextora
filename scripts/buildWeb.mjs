@@ -1,5 +1,5 @@
 // Builds the public web site into dist-web/ against the real Firebase project.
-// Used by the GitHub Pages workflow (.github/workflows/pages.yml), which sets WEB_BASE_URL=/nextora.
+// Used by Vercel's Git builds (see vercel.json) and by `npm run deploy:web`.
 // Folders named node_modules are skipped when files are uploaded, and Expo puts fonts and
 // icons in assets/node_modules, so that folder is renamed and references to it are rewritten.
 import { execSync } from 'node:child_process';
