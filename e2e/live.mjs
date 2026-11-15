@@ -15,6 +15,6 @@ await p.getByRole('button', { name: 'Sign in', exact: true }).last().click(); aw
 ok('real Firebase answers a wrong sign-in with a friendly message', /incorrect|wrong|couldn|check|not found|invalid/i.test(t) && !/Something broke/.test(t));
 await p.goto(B + '/forum'); await p.waitForTimeout(3500); ok('signed-out deep link handled (no crash)', !/Something broke/.test(await p.innerText('body')));
 await p.goto(B + '/nope'); await p.waitForTimeout(3000); ok('unknown page shows friendly 404', /doesn't exist/.test(await p.innerText('body')));
-const ai = await p.evaluate(async () => (await fetch('https://nextora-ai.adityajain1225.workers.dev/ask', { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer x' }, body: '{}' })).status);
-ok('AI service reachable from site, rejects fake sign-in (401)', ai === 401);
+const ai = await p.evaluate(async () => { try { return (await fetch('https://nextora-ai.adityajain1225.workers.dev/ask', { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer x' }, body: '{}' })).status; } catch { return 'blocked'; } });
+ok(ai === 'blocked' ? 'AI service reachable from site (BLOCKED: this address is not on the AI service approved list)' : 'AI service reachable from site, rejects fake sign-in (401)', ai === 401);
 console.log(out.join('\n')); console.log('page errors', errs); console.log('failed requests', [...new Set(bad)]); await b.close();
